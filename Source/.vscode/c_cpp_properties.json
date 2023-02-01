@@ -1,0 +1,26 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+
+            "includePath": [
+                "${workspaceFolder}/**", 
+                "/home/yehuda/Desktop/JUCE/juce-7.0.4-linux/JUCE/**"
+            ],
+
+            "browse": {
+                "limitSymbolsToIncludedHeaders": false,
+                "path": [
+                    "${workspaceFolder}/**", 
+                    "/home/yehuda/Desktop/JUCE/juce-7.0.4-linux/JUCE/**"
+                ]
+            },
+           "defines": [],
+            "compilerPath": "/usr/bin/clang",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "linux-clang-x64"
+        }
+    ],
+    "version": 4
+}
