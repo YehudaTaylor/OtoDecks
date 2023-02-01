@@ -47,6 +47,7 @@ void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRat
 
 void MainComponent::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
 {
+    // std::cout << "MainComponent::getNextAudioBlock was called" << std::endl;
     bufferToFill.clearActiveBufferRegion();
 }
 
