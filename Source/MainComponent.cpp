@@ -62,8 +62,12 @@ void MainComponent::releaseResources()
 //==============================================================================
 void MainComponent::paint (Graphics& g)
 {
+    // std::cout << "MainComponent::paint was called " << std::endl;
+
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
+    // g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
+
+    g.fillAll ( Colour{255,0,0});
 
     // You can add your drawing code here!
 }
