@@ -57,5 +57,8 @@
         "set": "cpp",
         "string": "cpp",
         "*.mm": "cpp"
-    }
+    },
+    "cSpell.words": [
+        "juce"
+    ]
 }
