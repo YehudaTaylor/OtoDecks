@@ -38,6 +38,7 @@ private:
     // Your private member variables go here...
 
     TextButton playButton{"PLAY"};
+    TextButton stopButton{"STOP"};
 
     Slider volSlider; 
 

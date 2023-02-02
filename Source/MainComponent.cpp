@@ -29,9 +29,14 @@ MainComponent::MainComponent()
     }
 
     addAndMakeVisible(playButton);
-    addAndMakeVisible(volSlider);    
+    addAndMakeVisible(stopButton);    
+    addAndMakeVisible(volSlider);
 
     playButton.addListener(this);
+    stopButton.addListener(this);
+
+    playButton.setButtonText("PLAY BUTTON");
+    stopButton.setButtonText("STOP BUTTON");
 }
 
 MainComponent::~MainComponent()
@@ -76,7 +81,8 @@ void MainComponent::resized()
     // update their positions.
     double rowH = getHeight() / 5; 
     playButton.setBounds(0, 0, getWidth(), rowH);    
-    volSlider.setBounds(0, rowH * 2, getWidth(), rowH);
+    stopButton.setBounds(0, rowH, getWidth(), rowH);
+    volSlider.setBounds(0, rowH * 3, getWidth(), rowH);
 
 }
 
