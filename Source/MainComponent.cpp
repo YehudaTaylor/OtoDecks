@@ -13,23 +13,36 @@ MainComponent::MainComponent()
 {
     // Make sure you set the size of the component after
     // you add any child components.
-    setSize (800, 600);
+    setSize(800, 600);
 
-    // Some platforms require permissions to open input channels so request that here
-    if (RuntimePermissions::isRequired (RuntimePermissions::recordAudio)
-        && ! RuntimePermissions::isGranted (RuntimePermissions::recordAudio))
+    // Some platforms require permissions to open input channels so request
+    // that here
+    if (RuntimePermissions::isRequired(RuntimePermissions::recordAudio) &&
+        !RuntimePermissions::isGranted(RuntimePermissions::recordAudio))
     {
-        RuntimePermissions::request (RuntimePermissions::recordAudio,
-                                     [&] (bool granted) { if (granted)  setAudioChannels (2, 2); });
-    }  
+        RuntimePermissions::request(RuntimePermissions::recordAudio,
+                                    [&](bool granted) {
+                                        if (granted)
+                                            setAudioChannels(2, 2);
+                                    });
+    }
     else
     {
         // Specify the number of input and output channels that we want to open
-        setAudioChannels (0, 2);
+        setAudioChannels(0, 2);
     }
 
     addAndMakeVisible(playButton);
-    addAndMakeVisible(volSlider);    
+    addAndMakeVisible(stopButton);
+    addAndMakeVisible(volSlider);
+    addAndMakeVisible(gainSlider);
+
+    playButton.addListener(this);
+    stopButton.addListener(this);
+    gainSlider.addListener(this);
+
+    playButton.setButtonText("PLAY BUTTON");
+    stopButton.setButtonText("STOP BUTTON");
 }
 
 MainComponent::~MainComponent()
@@ -39,13 +52,13 @@ MainComponent::~MainComponent()
 }
 
 //==============================================================================
-void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
+void MainComponent::prepareToPlay(int samplesPerBlockExpected,
+                                  double sampleRate)
 {
-
-
 }
 
-void MainComponent::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
+void MainComponent::getNextAudioBlock(
+    const AudioSourceChannelInfo& bufferToFill)
 {
     // std::cout << "MainComponent::getNextAudioBlock was called" << std::endl;
     bufferToFill.clearActiveBufferRegion();
@@ -60,7 +73,7 @@ void MainComponent::releaseResources()
 }
 
 //==============================================================================
-void MainComponent::paint (Graphics& g)
+void MainComponent::paint(Graphics& g)
 {
     // std::cout << "MainComponent::paint was called " << std::endl;
 
@@ -77,10 +90,31 @@ void MainComponent::resized()
     // This is called when the MainContentComponent is resized.
     // If you add any child components, this is where you should
     // update their positions.
-    double rowH = getHeight() / 5; 
-    playButton.setBounds(0, 0, getWidth(), rowH);    
-    volSlider.setBounds(0, rowH * 2, getWidth(), rowH);
-
+    double rowH = getHeight() / 5;
+    playButton.setBounds(0, 0, getWidth(), rowH);
+    stopButton.setBounds(0, rowH, getWidth(), rowH);
+    gainSlider.setBounds(0, rowH * 4, getWidth(), rowH);
+    volSlider.setBounds(0, rowH * 3, getWidth(), rowH);
 }
 
+void MainComponent::buttonClicked(Button* button)
+{
+    DBG(" MainComponent::buttonClicked: They clicked a button");
+    if (button ==
+        &playButton) // clicked button has same memory address as playButton
+    {
+        DBG(" MainComponent::buttonClicked: playButton");
+    }
+    if (button == &stopButton)
+    {
+        DBG(" MainComponent::buttonClicked: stopButton");
+    }
+}
 
+void MainComponent::sliderValueChanged(Slider* slider)
+{
+    if (slider == &gainSlider)
+    {
+        DBG("MainComponent::sliderValueChanged: gainSlider " << gainSlider.getValue() );
+    }
+}
