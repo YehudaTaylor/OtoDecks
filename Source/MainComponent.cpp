@@ -35,6 +35,7 @@ MainComponent::MainComponent()
     addAndMakeVisible(playButton);
     addAndMakeVisible(stopButton);
     addAndMakeVisible(volSlider);
+    addAndMakeVisible(gainSlider);
 
     playButton.addListener(this);
     stopButton.addListener(this);
@@ -88,6 +89,7 @@ void MainComponent::resized()
     double rowH = getHeight() / 5;
     playButton.setBounds(0, 0, getWidth(), rowH);
     stopButton.setBounds(0, rowH, getWidth(), rowH);
+    gainSlider.setBounds(0, rowH * 4, getWidth(), rowH);
     volSlider.setBounds(0, rowH * 3, getWidth(), rowH);
 }
 

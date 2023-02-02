@@ -41,6 +41,7 @@ private:
     TextButton stopButton{"STOP"};
 
     Slider volSlider; 
+    juce::Slider gainSlider;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };
