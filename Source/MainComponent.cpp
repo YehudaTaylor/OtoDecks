@@ -39,6 +39,7 @@ MainComponent::MainComponent()
 
     playButton.addListener(this);
     stopButton.addListener(this);
+    gainSlider.addListener(this);
 
     playButton.setButtonText("PLAY BUTTON");
     stopButton.setButtonText("STOP BUTTON");
@@ -104,5 +105,13 @@ void MainComponent::buttonClicked(Button* button)
     if (button == &stopButton)
     {
         DBG(" MainComponent::buttonClicked: stopButton");
+    }
+}
+
+void MainComponent::sliderValueChanged(Slider* slider)
+{
+    if (slider == &gainSlider)
+    {
+        DBG("MainComponent::sliderValueChanged: gainSlider");
     }
 }
