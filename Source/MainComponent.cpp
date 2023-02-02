@@ -30,6 +30,8 @@ MainComponent::MainComponent()
 
     addAndMakeVisible(playButton);
     addAndMakeVisible(volSlider);    
+
+    playButton.addListener(this);
 }
 
 MainComponent::~MainComponent()
@@ -78,4 +80,7 @@ void MainComponent::resized()
 
 }
 
-
+void MainComponent::buttonClicked(Button* button)
+{
+    DBG(" MainComponent::buttonClicked: They clicked the button" );
+}
