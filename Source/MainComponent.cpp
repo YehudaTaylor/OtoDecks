@@ -112,6 +112,6 @@ void MainComponent::sliderValueChanged(Slider* slider)
 {
     if (slider == &gainSlider)
     {
-        DBG("MainComponent::sliderValueChanged: gainSlider");
+        DBG("MainComponent::sliderValueChanged: gainSlider " << gainSlider.getValue() );
     }
 }
