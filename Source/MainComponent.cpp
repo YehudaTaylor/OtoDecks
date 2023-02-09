@@ -85,7 +85,7 @@ void MainComponent::getNextAudioBlock(
         bufferToFill.clearActiveBufferRegion();
         return;
     }
-    
+
     transportSource.getNextAudioBlock(bufferToFill);
     // auto* leftChannel =
     //     bufferToFill.buffer->getWritePointer(0, bufferToFill.startSample);
@@ -144,10 +144,13 @@ void MainComponent::buttonClicked(Button* button)
     {
         playing = true;
         dphase = 0;
+        transportSource.setPosition(0);
+        transportSource.start();
     }
     if (button == &stopButton)
     {
         playing = false;
+        transportSource.stop();
     }
 }
 
@@ -158,6 +161,7 @@ void MainComponent::sliderValueChanged(Slider* slider)
         DBG("MainComponent::sliderValueChanged: gainSlider "
             << gainSlider.getValue());
         gain = gainSlider.getValue();
+        transportSource.setGain(gain);
     }
     if (slider == &volSlider)
     {
