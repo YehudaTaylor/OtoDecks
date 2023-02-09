@@ -46,6 +46,7 @@ private:
     bool playing;
     double gain;
     float phase;
+    double dphase;
 
     Slider volSlider; 
     juce::Slider gainSlider;

@@ -59,6 +59,7 @@ void MainComponent::prepareToPlay(int samplesPerBlockExpected,
     playing = false;
     gain = 0.5;
     phase = 0;
+    dphase = 0;
 }
 
 void MainComponent::getNextAudioBlock(
@@ -77,7 +78,8 @@ void MainComponent::getNextAudioBlock(
     for (auto i = 0; i < bufferToFill.numSamples; ++i)
     {
         auto sample = fmod(phase, 1.0f);
-        phase += 0.005;
+        phase += fmod(dphase, 0.01f);
+        dphase += 0.0000005f;
         leftChannel[i] = sample * 0.125 * gain;
         rightChannel[i] = sample * 0.125 * gain;
     }
@@ -122,6 +124,7 @@ void MainComponent::buttonClicked(Button* button)
     if (button == &playButton)
     {
         playing = true;
+        dphase = 0;
     }
     if (button == &stopButton)
     {

@@ -59,6 +59,7 @@
         "*.mm": "cpp"
     },
     "cSpell.words": [
+        "dphase",
         "juce"
     ]
 }
