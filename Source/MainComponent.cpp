@@ -49,7 +49,7 @@ MainComponent::MainComponent()
 
     formatManager.registerBasicFormats();
 
-    //list of supported audio formats 
+    // list of supported audio formats
     // for (int i = 0; i < formatManager.getNumKnownFormats(); i++)
     // {
     //     std::string s =
@@ -73,6 +73,8 @@ void MainComponent::prepareToPlay(int samplesPerBlockExpected,
     phase = 0;
     dphase = 0;
     speed = 0.00000001;
+
+    transportSource.prepareToPlay(samplesPerBlockExpected, sampleRate);
 }
 
 void MainComponent::getNextAudioBlock(
@@ -83,21 +85,22 @@ void MainComponent::getNextAudioBlock(
         bufferToFill.clearActiveBufferRegion();
         return;
     }
-
-    auto* leftChannel =
-        bufferToFill.buffer->getWritePointer(0, bufferToFill.startSample);
-    auto* rightChannel =
-        bufferToFill.buffer->getWritePointer(1, bufferToFill.startSample);
-    for (auto i = 0; i < bufferToFill.numSamples; ++i)
-    {
-        auto sample = fmod(phase, 1.0f);
-        // auto sample = sin(phase);
-        sample += sin(phase);
-        phase += fmod(dphase, 0.01f);
-        dphase += speed;
-        leftChannel[i] = sample * 0.125 * gain;
-        rightChannel[i] = sample * 0.125 * gain;
-    }
+    
+    transportSource.getNextAudioBlock(bufferToFill);
+    // auto* leftChannel =
+    //     bufferToFill.buffer->getWritePointer(0, bufferToFill.startSample);
+    // auto* rightChannel =
+    //     bufferToFill.buffer->getWritePointer(1, bufferToFill.startSample);
+    // for (auto i = 0; i < bufferToFill.numSamples; ++i)
+    // {
+    //     auto sample = fmod(phase, 1.0f);
+    //     // auto sample = sin(phase);
+    //     sample += sin(phase);
+    //     phase += fmod(dphase, 0.01f);
+    //     dphase += speed;
+    //     leftChannel[i] = sample * 0.125 * gain;
+    //     rightChannel[i] = sample * 0.125 * gain;
+    // }
 }
 
 void MainComponent::releaseResources()
@@ -106,6 +109,7 @@ void MainComponent::releaseResources()
     // restarted due to a setting change.
 
     // For more details, see the help for AudioProcessor::releaseResources()
+    transportSource.releaseResources();
 }
 
 //==============================================================================

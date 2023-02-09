@@ -43,6 +43,7 @@ private:
     TextButton stopButton{"STOP"};
 
     AudioFormatManager formatManager;
+    AudioTransportSource transportSource;
 
     Random random;
     bool playing;
