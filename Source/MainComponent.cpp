@@ -40,6 +40,7 @@ MainComponent::MainComponent()
     playButton.addListener(this);
     stopButton.addListener(this);
     gainSlider.addListener(this);
+    gainSlider.setRange(0, 1);
 
     playButton.setButtonText("PLAY BUTTON");
     stopButton.setButtonText("STOP BUTTON");
@@ -56,6 +57,7 @@ void MainComponent::prepareToPlay(int samplesPerBlockExpected,
                                   double sampleRate)
 {
     playing = false;
+    gain = 0.5;
 }
 
 void MainComponent::getNextAudioBlock(
@@ -73,8 +75,8 @@ void MainComponent::getNextAudioBlock(
         bufferToFill.buffer->getWritePointer(1, bufferToFill.startSample);
     for (auto i = 0; i < bufferToFill.numSamples; ++i)
     {
-        leftChannel[i] = random.nextFloat() * 0.125f;
-        rightChannel[i] = random.nextFloat() * 0.125f;
+        leftChannel[i] = random.nextFloat() * 0.125 * gain;
+        rightChannel[i] = random.nextFloat() * 0.125 * gain;
     }
 }
 
@@ -130,5 +132,6 @@ void MainComponent::sliderValueChanged(Slider* slider)
     {
         DBG("MainComponent::sliderValueChanged: gainSlider "
             << gainSlider.getValue());
+        gain = gainSlider.getValue();
     }
 }

@@ -44,6 +44,7 @@ private:
 
     Random random;
     bool playing;
+    double gain;
 
     Slider volSlider; 
     juce::Slider gainSlider;
