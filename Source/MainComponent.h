@@ -59,5 +59,7 @@ private:
     juce::TextButton loadButton;
     juce::FileChooser fChooser{"Select a file..."};
 
+    void loadURL(URL audioURL);
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

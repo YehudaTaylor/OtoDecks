@@ -168,12 +168,7 @@ void MainComponent::buttonClicked(Button* button)
         fChooser.launchAsync(
             fileChooserFlags, [this](const FileChooser& chooser) {
                 auto chosenFile = chooser.getResult();
-                auto* reader = formatManager.createReaderFor(chosenFile);
-                std::unique_ptr<AudioFormatReaderSource> newSource(
-                    new AudioFormatReaderSource(reader, true));
-                transportSource.setSource(newSource.get(), 0, nullptr,
-                                          reader->sampleRate);
-                readerSource.reset(newSource.release());
+                loadURL(URL{chosenFile});
             });
     }
 }
@@ -192,5 +187,19 @@ void MainComponent::sliderValueChanged(Slider* slider)
         DBG("MainComponent::sliderValueChanged: gainSlider "
             << volSlider.getValue());
         speed = volSlider.getValue();
+    }
+}
+
+void MainComponent::loadURL(URL audioURL)
+{
+    auto* reader =
+        formatManager.createReaderFor(audioURL.createInputStream(false));
+    if (reader != nullptr) // good file!
+    {
+        std::unique_ptr<AudioFormatReaderSource> newSource(
+            new AudioFormatReaderSource(reader, true));
+        transportSource.setSource(newSource.get(), 0, nullptr,
+                                  reader->sampleRate);
+        readerSource.reset(newSource.release());
     }
 }
