@@ -46,6 +46,16 @@ MainComponent::MainComponent()
 
     playButton.setButtonText("PLAY BUTTON");
     stopButton.setButtonText("STOP BUTTON");
+
+    formatManager.registerBasicFormats();
+
+    //list of supported audio formats 
+    // for (int i = 0; i < formatManager.getNumKnownFormats(); i++)
+    // {
+    //     std::string s =
+    //         formatManager.getKnownFormat(i)->getFormatName().toStdString();
+    //     std::cout << i << " " << s << std::endl;
+    // }
 }
 
 MainComponent::~MainComponent()

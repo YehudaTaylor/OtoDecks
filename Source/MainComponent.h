@@ -42,6 +42,8 @@ private:
     TextButton playButton{"PLAY"};
     TextButton stopButton{"STOP"};
 
+    AudioFormatManager formatManager;
+
     Random random;
     bool playing;
     double gain;
