@@ -43,6 +43,7 @@ private:
     TextButton stopButton{"STOP"};
 
     Random random;
+    bool playing;
 
     Slider volSlider; 
     juce::Slider gainSlider;

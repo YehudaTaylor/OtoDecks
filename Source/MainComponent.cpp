@@ -55,13 +55,18 @@ MainComponent::~MainComponent()
 void MainComponent::prepareToPlay(int samplesPerBlockExpected,
                                   double sampleRate)
 {
+    playing = false;
 }
 
 void MainComponent::getNextAudioBlock(
     const AudioSourceChannelInfo& bufferToFill)
 {
-    // std::cout << "MainComponent::getNextAudioBlock was called" << std::endl;
-    // bufferToFill.clearActiveBufferRegion();
+    if (!playing)
+    {
+        bufferToFill.clearActiveBufferRegion();
+        return;
+    }
+
     auto* leftChannel =
         bufferToFill.buffer->getWritePointer(0, bufferToFill.startSample);
     auto* rightChannel =
@@ -109,15 +114,13 @@ void MainComponent::resized()
 
 void MainComponent::buttonClicked(Button* button)
 {
-    DBG(" MainComponent::buttonClicked: They clicked a button");
-    if (button ==
-        &playButton) // clicked button has same memory address as playButton
+    if (button == &playButton)
     {
-        DBG(" MainComponent::buttonClicked: playButton");
+        playing = true;
     }
     if (button == &stopButton)
     {
-        DBG(" MainComponent::buttonClicked: stopButton");
+        playing = false;
     }
 }
 
