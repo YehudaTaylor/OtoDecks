@@ -44,6 +44,7 @@ private:
 
     AudioFormatManager formatManager;
     AudioTransportSource transportSource;
+    std::unique_ptr<AudioFormatReaderSource> readerSource;
 
     Random random;
     bool playing;
@@ -54,6 +55,9 @@ private:
 
     Slider volSlider; 
     juce::Slider gainSlider;
+
+    juce::TextButton loadButton;
+    juce::FileChooser fChooser{"Select a file..."};
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

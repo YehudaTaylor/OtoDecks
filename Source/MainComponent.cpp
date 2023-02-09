@@ -47,6 +47,10 @@ MainComponent::MainComponent()
     playButton.setButtonText("PLAY BUTTON");
     stopButton.setButtonText("STOP BUTTON");
 
+    addAndMakeVisible(loadButton);
+    loadButton.addListener(this);
+    loadButton.setButtonText("LOAD");
+
     formatManager.registerBasicFormats();
 
     // list of supported audio formats
@@ -134,6 +138,7 @@ void MainComponent::resized()
     double rowH = getHeight() / 5;
     playButton.setBounds(0, 0, getWidth(), rowH);
     stopButton.setBounds(0, rowH, getWidth(), rowH);
+    loadButton.setBounds(0, rowH * 2, getWidth(), rowH);
     gainSlider.setBounds(0, rowH * 4, getWidth(), rowH);
     volSlider.setBounds(0, rowH * 3, getWidth(), rowH);
 }
@@ -151,6 +156,25 @@ void MainComponent::buttonClicked(Button* button)
     {
         playing = false;
         transportSource.stop();
+    }
+    if (button == &loadButton)
+    {
+        // - configure the dialogue
+        auto fileChooserFlags = FileBrowserComponent::canSelectFiles;
+        // - launch out of the main thread
+        // - note how we use a lambda function which you've probably
+        // not seen before. Please do not worry too much about that
+        // but it is necessary as of JUCE 6.1
+        fChooser.launchAsync(
+            fileChooserFlags, [this](const FileChooser& chooser) {
+                auto chosenFile = chooser.getResult();
+                auto* reader = formatManager.createReaderFor(chosenFile);
+                std::unique_ptr<AudioFormatReaderSource> newSource(
+                    new AudioFormatReaderSource(reader, true));
+                transportSource.setSource(newSource.get(), 0, nullptr,
+                                          reader->sampleRate);
+                readerSource.reset(newSource.release());
+            });
     }
 }
 
