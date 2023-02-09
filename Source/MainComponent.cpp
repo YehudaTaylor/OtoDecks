@@ -58,6 +58,7 @@ void MainComponent::prepareToPlay(int samplesPerBlockExpected,
 {
     playing = false;
     gain = 0.5;
+    phase = 0;
 }
 
 void MainComponent::getNextAudioBlock(
@@ -75,8 +76,10 @@ void MainComponent::getNextAudioBlock(
         bufferToFill.buffer->getWritePointer(1, bufferToFill.startSample);
     for (auto i = 0; i < bufferToFill.numSamples; ++i)
     {
-        leftChannel[i] = random.nextFloat() * 0.125 * gain;
-        rightChannel[i] = random.nextFloat() * 0.125 * gain;
+        auto sample = fmod(phase, 1.0f);
+        phase += 0.005;
+        leftChannel[i] = sample * 0.125 * gain;
+        rightChannel[i] = sample * 0.125 * gain;
     }
 }
 
