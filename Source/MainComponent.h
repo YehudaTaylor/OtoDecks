@@ -42,6 +42,8 @@ private:
     TextButton playButton{"PLAY"};
     TextButton stopButton{"STOP"};
 
+    Random random;
+
     Slider volSlider; 
     juce::Slider gainSlider;
 

@@ -61,7 +61,16 @@ void MainComponent::getNextAudioBlock(
     const AudioSourceChannelInfo& bufferToFill)
 {
     // std::cout << "MainComponent::getNextAudioBlock was called" << std::endl;
-    bufferToFill.clearActiveBufferRegion();
+    // bufferToFill.clearActiveBufferRegion();
+    auto* leftChannel =
+        bufferToFill.buffer->getWritePointer(0, bufferToFill.startSample);
+    auto* rightChannel =
+        bufferToFill.buffer->getWritePointer(1, bufferToFill.startSample);
+    for (auto i = 0; i < bufferToFill.numSamples; ++i)
+    {
+        leftChannel[i] = random.nextFloat() * 0.125f;
+        rightChannel[i] = random.nextFloat() * 0.125f;
+    }
 }
 
 void MainComponent::releaseResources()
@@ -77,10 +86,11 @@ void MainComponent::paint(Graphics& g)
 {
     // std::cout << "MainComponent::paint was called " << std::endl;
 
-    // (Our component is opaque, so we must completely fill the background with a solid colour)
-    // g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
+    // (Our component is opaque, so we must completely fill the background with
+    // a solid colour) g.fillAll (getLookAndFeel().findColour
+    // (ResizableWindow::backgroundColourId));
 
-    g.fillAll ( Colour{255,0,0});
+    g.fillAll(Colour{255, 0, 0});
 
     // You can add your drawing code here!
 }
@@ -115,6 +125,7 @@ void MainComponent::sliderValueChanged(Slider* slider)
 {
     if (slider == &gainSlider)
     {
-        DBG("MainComponent::sliderValueChanged: gainSlider " << gainSlider.getValue() );
+        DBG("MainComponent::sliderValueChanged: gainSlider "
+            << gainSlider.getValue());
     }
 }
