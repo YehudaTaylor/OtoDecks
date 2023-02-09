@@ -47,6 +47,7 @@ private:
     double gain;
     float phase;
     double dphase;
+    double speed;
 
     Slider volSlider; 
     juce::Slider gainSlider;

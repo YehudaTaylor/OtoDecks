@@ -41,6 +41,8 @@ MainComponent::MainComponent()
     stopButton.addListener(this);
     gainSlider.addListener(this);
     gainSlider.setRange(0, 1);
+    volSlider.addListener(this);
+    volSlider.setRange(0.00000001, 0.00001);
 
     playButton.setButtonText("PLAY BUTTON");
     stopButton.setButtonText("STOP BUTTON");
@@ -60,6 +62,7 @@ void MainComponent::prepareToPlay(int samplesPerBlockExpected,
     gain = 0.5;
     phase = 0;
     dphase = 0;
+    speed = 0.00000001;
 }
 
 void MainComponent::getNextAudioBlock(
@@ -78,8 +81,10 @@ void MainComponent::getNextAudioBlock(
     for (auto i = 0; i < bufferToFill.numSamples; ++i)
     {
         auto sample = fmod(phase, 1.0f);
+        // auto sample = sin(phase);
+        sample += sin(phase);
         phase += fmod(dphase, 0.01f);
-        dphase += 0.0000005f;
+        dphase += speed;
         leftChannel[i] = sample * 0.125 * gain;
         rightChannel[i] = sample * 0.125 * gain;
     }
@@ -139,5 +144,11 @@ void MainComponent::sliderValueChanged(Slider* slider)
         DBG("MainComponent::sliderValueChanged: gainSlider "
             << gainSlider.getValue());
         gain = gainSlider.getValue();
+    }
+    if (slider == &volSlider)
+    {
+        DBG("MainComponent::sliderValueChanged: gainSlider "
+            << volSlider.getValue());
+        speed = volSlider.getValue();
     }
 }
