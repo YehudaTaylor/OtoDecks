@@ -12,30 +12,34 @@
 
 //==============================================================================
 /*
-    This component lives inside our window, and this is where you should put all
-    your controls and content.
+    This component lives inside our window, and this is where you should put
+   all your controls and content.
 */
-class MainComponent   : public AudioAppComponent, public Button::Listener, public Slider::Listener
+class MainComponent : public AudioAppComponent,
+                      public Button::Listener,
+                      public Slider::Listener
 {
-public:
+  public:
     //==============================================================================
     MainComponent();
     ~MainComponent();
 
     //==============================================================================
-    void prepareToPlay (int samplesPerBlockExpected, double sampleRate) override;
-    void getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill) override;
+    void prepareToPlay(int samplesPerBlockExpected,
+                       double sampleRate) override;
+    void getNextAudioBlock(
+        const AudioSourceChannelInfo& bufferToFill) override;
     void releaseResources() override;
 
     //==============================================================================
-    void paint (Graphics& g) override;
+    void paint(Graphics& g) override;
     void resized() override;
 
     void buttonClicked(Button* button) override;
 
-    void sliderValueChanged (Slider *slider) override;
+    void sliderValueChanged(Slider* slider) override;
 
-private:
+  private:
     //==============================================================================
     // Your private member variables go here...
 
@@ -46,14 +50,10 @@ private:
     AudioTransportSource transportSource;
     std::unique_ptr<AudioFormatReaderSource> readerSource;
 
-    Random random;
     bool playing;
     double gain;
-    float phase;
-    double dphase;
-    double speed;
 
-    Slider volSlider; 
+    Slider posSlider;
     juce::Slider gainSlider;
 
     juce::TextButton loadButton;
@@ -61,5 +61,5 @@ private:
 
     void loadURL(URL audioURL);
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainComponent)
 };

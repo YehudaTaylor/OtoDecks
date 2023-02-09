@@ -34,15 +34,16 @@ MainComponent::MainComponent()
 
     addAndMakeVisible(playButton);
     addAndMakeVisible(stopButton);
-    addAndMakeVisible(volSlider);
+    addAndMakeVisible(posSlider);
     addAndMakeVisible(gainSlider);
 
     playButton.addListener(this);
     stopButton.addListener(this);
     gainSlider.addListener(this);
     gainSlider.setRange(0, 1);
-    volSlider.addListener(this);
-    volSlider.setRange(0.00000001, 0.00001);
+    posSlider.addListener(this);
+    // posSlider.setRange(1, transportSource.getLengthInSeconds());
+    posSlider.setRange(1, 10);
 
     playButton.setButtonText("PLAY BUTTON");
     stopButton.setButtonText("STOP BUTTON");
@@ -74,11 +75,9 @@ void MainComponent::prepareToPlay(int samplesPerBlockExpected,
 {
     playing = false;
     gain = 0.5;
-    phase = 0;
-    dphase = 0;
-    speed = 0.00000001;
 
     transportSource.prepareToPlay(samplesPerBlockExpected, sampleRate);
+    // posSlider.setRange(1, transportSource.getLengthInSeconds());
 }
 
 void MainComponent::getNextAudioBlock(
@@ -91,20 +90,6 @@ void MainComponent::getNextAudioBlock(
     }
 
     transportSource.getNextAudioBlock(bufferToFill);
-    // auto* leftChannel =
-    //     bufferToFill.buffer->getWritePointer(0, bufferToFill.startSample);
-    // auto* rightChannel =
-    //     bufferToFill.buffer->getWritePointer(1, bufferToFill.startSample);
-    // for (auto i = 0; i < bufferToFill.numSamples; ++i)
-    // {
-    //     auto sample = fmod(phase, 1.0f);
-    //     // auto sample = sin(phase);
-    //     sample += sin(phase);
-    //     phase += fmod(dphase, 0.01f);
-    //     dphase += speed;
-    //     leftChannel[i] = sample * 0.125 * gain;
-    //     rightChannel[i] = sample * 0.125 * gain;
-    // }
 }
 
 void MainComponent::releaseResources()
@@ -140,7 +125,7 @@ void MainComponent::resized()
     stopButton.setBounds(0, rowH, getWidth(), rowH);
     loadButton.setBounds(0, rowH * 2, getWidth(), rowH);
     gainSlider.setBounds(0, rowH * 4, getWidth(), rowH);
-    volSlider.setBounds(0, rowH * 3, getWidth(), rowH);
+    posSlider.setBounds(0, rowH * 3, getWidth(), rowH);
 }
 
 void MainComponent::buttonClicked(Button* button)
@@ -148,7 +133,6 @@ void MainComponent::buttonClicked(Button* button)
     if (button == &playButton)
     {
         playing = true;
-        dphase = 0;
         transportSource.setPosition(0);
         transportSource.start();
     }
@@ -165,11 +149,11 @@ void MainComponent::buttonClicked(Button* button)
         // - note how we use a lambda function which you've probably
         // not seen before. Please do not worry too much about that
         // but it is necessary as of JUCE 6.1
-        fChooser.launchAsync(
-            fileChooserFlags, [this](const FileChooser& chooser) {
-                auto chosenFile = chooser.getResult();
-                loadURL(URL{chosenFile});
-            });
+        fChooser.launchAsync(fileChooserFlags,
+                             [this](const FileChooser& chooser) {
+                                 auto chosenFile = chooser.getResult();
+                                 loadURL(URL{chosenFile});
+                             });
     }
 }
 
@@ -182,11 +166,11 @@ void MainComponent::sliderValueChanged(Slider* slider)
         gain = gainSlider.getValue();
         transportSource.setGain(gain);
     }
-    if (slider == &volSlider)
+    if (slider == &posSlider)
     {
         DBG("MainComponent::sliderValueChanged: gainSlider "
-            << volSlider.getValue());
-        speed = volSlider.getValue();
+            << posSlider.getValue());
+        transportSource.setPosition(posSlider.getValue());
     }
 }
 
