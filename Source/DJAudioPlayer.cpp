@@ -18,6 +18,18 @@ DJAudioPlayer::~DJAudioPlayer()
 {
 }
 
+void DJAudioPlayer::prepareToPlay(int samplesPerBlockExpected,
+                                  double sampleRate)
+{
+}
+void DJAudioPlayer::getNextAudioBlock(
+    const AudioSourceChannelInfo& bufferToFill)
+{
+}
+void DJAudioPlayer::releaseResources()
+{
+}
+
 void DJAudioPlayer::loadURL(URL audioURL)
 {
     auto* reader =
