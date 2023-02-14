@@ -42,7 +42,7 @@ MainComponent::MainComponent()
     gainSlider.addListener(this);
     gainSlider.setRange(0, 1);
     posSlider.addListener(this);
-    posSlider.setRange(1, 10);
+    posSlider.setRange(0, 1);
 
     playButton.setButtonText("PLAY BUTTON");
     stopButton.setButtonText("STOP BUTTON");
@@ -180,7 +180,7 @@ void MainComponent::sliderValueChanged(Slider* slider)
     }
     if (slider == &posSlider)
     {
-        DBG("MainComponent::sliderValueChanged: gainSlider "
+        DBG("MainComponent::sliderValueChanged: posSlider "
             << posSlider.getValue());
         player1.setPosition(posSlider.getValue());
     }
