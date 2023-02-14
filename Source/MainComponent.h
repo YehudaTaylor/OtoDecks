@@ -47,14 +47,7 @@ class MainComponent : public AudioAppComponent,
     TextButton playButton{"PLAY"};
     TextButton stopButton{"STOP"};
 
-    AudioFormatManager formatManager;
-    AudioTransportSource transportSource;
-    std::unique_ptr<AudioFormatReaderSource> readerSource;
-
     DJAudioPlayer player1;
-
-    bool playing;
-    double gain;
 
     Slider posSlider;
     juce::Slider gainSlider;
@@ -62,7 +55,8 @@ class MainComponent : public AudioAppComponent,
     juce::TextButton loadButton;
     juce::FileChooser fChooser{"Select a file..."};
 
-    void loadURL(URL audioURL);
+    bool playing;
+    double gain;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainComponent)
 };

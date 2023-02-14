@@ -42,7 +42,6 @@ MainComponent::MainComponent()
     gainSlider.addListener(this);
     gainSlider.setRange(0, 1);
     posSlider.addListener(this);
-    // posSlider.setRange(1, transportSource.getLengthInSeconds());
     posSlider.setRange(1, 10);
 
     playButton.setButtonText("PLAY BUTTON");
@@ -51,8 +50,6 @@ MainComponent::MainComponent()
     addAndMakeVisible(loadButton);
     loadButton.addListener(this);
     loadButton.setButtonText("LOAD");
-
-    formatManager.registerBasicFormats();
 
     // list of supported audio formats
     // for (int i = 0; i < formatManager.getNumKnownFormats(); i++)
@@ -136,14 +133,11 @@ void MainComponent::buttonClicked(Button* button)
     if (button == &playButton)
     {
         playing = true;
-        // transportSource.setPosition(0);
-        // transportSource.start();
         player1.play();
     }
     if (button == &stopButton)
     {
         playing = false;
-        // transportSource.stop();
         player1.stop();
     }
     if (button == &loadButton)
@@ -182,26 +176,12 @@ void MainComponent::sliderValueChanged(Slider* slider)
         DBG("MainComponent::sliderValueChanged: gainSlider "
             << gainSlider.getValue());
         gain = gainSlider.getValue();
-        transportSource.setGain(gain);
+        player1.setGain(gain);
     }
     if (slider == &posSlider)
     {
         DBG("MainComponent::sliderValueChanged: gainSlider "
             << posSlider.getValue());
-        transportSource.setPosition(posSlider.getValue());
+        player1.setPosition(posSlider.getValue());
     }
 }
-
-// void MainComponent::loadURL(URL audioURL)
-// {
-//     auto* reader =
-//         formatManager.createReaderFor(audioURL.createInputStream(false));
-//     if (reader != nullptr) // good file!
-//     {
-//         std::unique_ptr<AudioFormatReaderSource> newSource(
-//             new AudioFormatReaderSource(reader, true));
-//         transportSource.setSource(newSource.get(), 0, nullptr,
-//                                   reader->sampleRate);
-//         readerSource.reset(newSource.release());
-//     }
-// }
