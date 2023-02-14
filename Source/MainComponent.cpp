@@ -151,10 +151,20 @@ void MainComponent::buttonClicked(Button* button)
         // but it is necessary as of JUCE 6.1
         fChooser.launchAsync(fileChooserFlags,
                              [this](const FileChooser& chooser) {
-                                 auto chosenFile = chooser.getResult();
-                                 loadURL(URL{chosenFile});
+                                 URL audioURL = URL{chooser.getResult()};
+                                 player1.loadURL(audioURL);
                              });
     }
+    //the code below does not work! browseForFileToOpen() causes an error
+    // if (button == &loadButton)
+    // {
+    //     FileChooser chooser("Select a Wave file to play...");
+    //     if (chooser.browseForFileToOpen())
+    //     {
+    //         URL audioURL = URL{chooser.getResult()};
+    //         player1.loadURL(audioURL);
+    //     }
+    // }
 }
 
 void MainComponent::sliderValueChanged(Slider* slider)
