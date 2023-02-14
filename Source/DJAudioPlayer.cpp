@@ -49,10 +49,13 @@ void DJAudioPlayer::loadURL(URL audioURL)
         transportSource.setSource(newSource.get(), 0, nullptr,
                                   reader->sampleRate);
         readerSource.reset(newSource.release());
+
+        std::cout << "DJAudioPlayer::loadURL: file loaded" << std::endl;
     }
 }
 void DJAudioPlayer::play()
 {
+    transportSource.setPosition(0);
     transportSource.start();
 }
 void DJAudioPlayer::stop()

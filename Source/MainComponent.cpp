@@ -76,18 +76,19 @@ void MainComponent::prepareToPlay(int samplesPerBlockExpected,
     playing = false;
     gain = 0.5;
 
-    transportSource.prepareToPlay(samplesPerBlockExpected, sampleRate);
+    player1.prepareToPlay(samplesPerBlockExpected, sampleRate);
+    // transportSource.prepareToPlay(samplesPerBlockExpected, sampleRate);
     // posSlider.setRange(1, transportSource.getLengthInSeconds());
 }
 
 void MainComponent::getNextAudioBlock(
     const AudioSourceChannelInfo& bufferToFill)
 {
-    if (!playing)
-    {
-        bufferToFill.clearActiveBufferRegion();
-        return;
-    }
+    // if (!playing)
+    // {
+    //     bufferToFill.clearActiveBufferRegion();
+    //     return;
+    // }
 
     // transportSource.getNextAudioBlock(bufferToFill);
     player1.getNextAudioBlock(bufferToFill);
@@ -99,7 +100,8 @@ void MainComponent::releaseResources()
     // restarted due to a setting change.
 
     // For more details, see the help for AudioProcessor::releaseResources()
-    transportSource.releaseResources();
+    // transportSource.releaseResources();
+    player1.releaseResources();
 }
 
 //==============================================================================
@@ -153,11 +155,14 @@ void MainComponent::buttonClicked(Button* button)
         // but it is necessary as of JUCE 6.1
         fChooser.launchAsync(fileChooserFlags,
                              [this](const FileChooser& chooser) {
-                                 URL audioURL = URL{chooser.getResult()};
-                                 player1.loadURL(audioURL);
+                                 //  URL audioURL = URL{chooser.getResult()};
+                                 //  player1.loadURL(audioURL);
+                                 File chosenFile = chooser.getResult();
+                                 player1.loadURL(URL{chosenFile});
                              });
+        std::cout << "Load button clicked" << std::endl;
     }
-    //the code below does not work! browseForFileToOpen() causes an error
+    // the code below does not work! browseForFileToOpen() causes an error
     // if (button == &loadButton)
     // {
     //     FileChooser chooser("Select a Wave file to play...");
