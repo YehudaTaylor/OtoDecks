@@ -133,8 +133,9 @@ void MainComponent::buttonClicked(Button* button)
     if (button == &playButton)
     {
         playing = true;
-        transportSource.setPosition(0);
-        transportSource.start();
+        // transportSource.setPosition(0);
+        // transportSource.start();
+        player1.play();
     }
     if (button == &stopButton)
     {

@@ -33,6 +33,7 @@ void DJAudioPlayer::loadURL(URL audioURL)
 }
 void DJAudioPlayer::play()
 {
+    transportSource.start();
 }
 void DJAudioPlayer::stop()
 {
