@@ -26,7 +26,7 @@ void DJAudioPlayer::prepareToPlay(int samplesPerBlockExpected,
 void DJAudioPlayer::getNextAudioBlock(
     const AudioSourceChannelInfo& bufferToFill)
 {
-    if(readerSource.get() == nullptr)
+    if (readerSource.get() == nullptr)
     {
         bufferToFill.clearActiveBufferRegion();
         return;
@@ -64,7 +64,16 @@ void DJAudioPlayer::stop()
 }
 void DJAudioPlayer::setPosition(double posInSecs)
 {
+    if (posInSecs < 0 || posInSecs > transportSource.getLengthInSeconds())
+    {
+        std::cout << "DJAudioPlayer::setPosition: warning set position "
+                  << posInSecs << " greater than length "
+                  << transportSource.getLengthInSeconds() << std::endl;
+        return;
+    }
+    transportSource.setPosition(posInSecs);
 }
 void DJAudioPlayer::setGain(double gain)
 {
+    transportSource.setGain(gain);
 }
