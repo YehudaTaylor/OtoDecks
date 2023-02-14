@@ -143,7 +143,8 @@ void MainComponent::buttonClicked(Button* button)
     if (button == &stopButton)
     {
         playing = false;
-        transportSource.stop();
+        // transportSource.stop();
+        player1.stop();
     }
     if (button == &loadButton)
     {

@@ -60,6 +60,7 @@ void DJAudioPlayer::play()
 }
 void DJAudioPlayer::stop()
 {
+    transportSource.stop();
 }
 void DJAudioPlayer::setPosition(double posInSecs)
 {
