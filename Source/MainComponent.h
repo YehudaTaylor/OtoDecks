@@ -9,6 +9,7 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "DJAudioPlayer.h"
 
 //==============================================================================
 /*
@@ -49,6 +50,8 @@ class MainComponent : public AudioAppComponent,
     AudioFormatManager formatManager;
     AudioTransportSource transportSource;
     std::unique_ptr<AudioFormatReaderSource> readerSource;
+
+    DJAudioPlayer player1;
 
     bool playing;
     double gain;
