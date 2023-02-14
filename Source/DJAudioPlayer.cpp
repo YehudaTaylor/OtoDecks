@@ -73,6 +73,13 @@ void DJAudioPlayer::setPosition(double posInSecs)
     }
     transportSource.setPosition(posInSecs);
 }
+
+void DJAudioPlayer::setPositionRelative(double pos)
+{
+    double posInSecs = pos * transportSource.getLengthInSeconds();
+    setPosition(posInSecs);
+}
+
 void DJAudioPlayer::setGain(double gain)
 {
     transportSource.setGain(gain);

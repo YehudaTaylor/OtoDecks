@@ -35,6 +35,8 @@ class DJAudioPlayer : public AudioSource
     void setPosition(double posInSecs);
     /** set the gain of the current song*/
     void setGain(double gain);
+    /** set position in song relative to the position in the slider*/
+    void setPositionRelative(double pos);
 
   private:
     AudioFormatManager formatManager;
