@@ -12,11 +12,19 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
-class DJAudioPlayer
+class DJAudioPlayer : public AudioSource
 {
   public:
     DJAudioPlayer();
     ~DJAudioPlayer();
+
+    void prepareToPlay(int samplesPerBlockExpected,
+                       double sampleRate) override;
+    void getNextAudioBlock(
+        const AudioSourceChannelInfo& bufferToFill) override;
+    void releaseResources() override;
+
+
     /** load a ULR (a file in this case) from the file system*/
     void loadURL(URL file);
     /** start playing the file*/
