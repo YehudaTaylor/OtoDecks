@@ -9,3 +9,25 @@
 */
 
 #include "DJAudioPlayer.h"
+
+DJAudioPlayer::DJAudioPlayer()
+{
+}
+DJAudioPlayer::~DJAudioPlayer()
+{
+}
+void DJAudioPlayer::loadURL(URL audioURL)
+{
+}
+void DJAudioPlayer::play()
+{
+}
+void DJAudioPlayer::stop()
+{
+}
+void DJAudioPlayer::setPosition(double posInSecs)
+{
+}
+void DJAudioPlayer::setGain(double gain)
+{
+}
