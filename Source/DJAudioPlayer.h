@@ -35,6 +35,7 @@ class DJAudioPlayer : public AudioSource
     void setPosition(double posInSecs);
     /** set the gain of the current song*/
     void setGain(double gain);
+    void setSpeed(double ratio);
     /** set position in song relative to the position in the slider*/
     void setPositionRelative(double pos);
 
@@ -42,4 +43,5 @@ class DJAudioPlayer : public AudioSource
     AudioFormatManager formatManager;
     std::unique_ptr<AudioFormatReaderSource> readerSource;
     AudioTransportSource transportSource;
+    ResamplingAudioSource resampleSource{&transportSource, false, 2};
 };
