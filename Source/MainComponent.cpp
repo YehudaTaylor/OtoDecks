@@ -174,16 +174,16 @@ void MainComponent::sliderValueChanged(Slider* slider)
     }
 }
 
-void MainComponent::loadURL(URL audioURL)
-{
-    auto* reader =
-        formatManager.createReaderFor(audioURL.createInputStream(false));
-    if (reader != nullptr) // good file!
-    {
-        std::unique_ptr<AudioFormatReaderSource> newSource(
-            new AudioFormatReaderSource(reader, true));
-        transportSource.setSource(newSource.get(), 0, nullptr,
-                                  reader->sampleRate);
-        readerSource.reset(newSource.release());
-    }
-}
+// void MainComponent::loadURL(URL audioURL)
+// {
+//     auto* reader =
+//         formatManager.createReaderFor(audioURL.createInputStream(false));
+//     if (reader != nullptr) // good file!
+//     {
+//         std::unique_ptr<AudioFormatReaderSource> newSource(
+//             new AudioFormatReaderSource(reader, true));
+//         transportSource.setSource(newSource.get(), 0, nullptr,
+//                                   reader->sampleRate);
+//         readerSource.reset(newSource.release());
+//     }
+// }

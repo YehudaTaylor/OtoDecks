@@ -27,4 +27,9 @@ class DJAudioPlayer
     void setPosition(double posInSecs);
     /** set the gain of the current song*/
     void setGain(double gain);
+
+  private:
+    AudioFormatManager formatManager;
+    std::unique_ptr<AudioFormatReaderSource> readerSource;
+    AudioTransportSource transportSource;
 };
