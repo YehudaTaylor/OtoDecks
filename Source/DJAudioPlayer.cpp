@@ -21,13 +21,21 @@ DJAudioPlayer::~DJAudioPlayer()
 void DJAudioPlayer::prepareToPlay(int samplesPerBlockExpected,
                                   double sampleRate)
 {
+    transportSource.prepareToPlay(samplesPerBlockExpected, sampleRate);
 }
 void DJAudioPlayer::getNextAudioBlock(
     const AudioSourceChannelInfo& bufferToFill)
 {
+    if(readerSource.get() == nullptr)
+    {
+        bufferToFill.clearActiveBufferRegion();
+        return;
+    }
+    transportSource.getNextAudioBlock(bufferToFill);
 }
 void DJAudioPlayer::releaseResources()
 {
+    transportSource.releaseResources();
 }
 
 void DJAudioPlayer::loadURL(URL audioURL)
