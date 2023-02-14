@@ -89,7 +89,8 @@ void MainComponent::getNextAudioBlock(
         return;
     }
 
-    transportSource.getNextAudioBlock(bufferToFill);
+    // transportSource.getNextAudioBlock(bufferToFill);
+    player1.getNextAudioBlock(bufferToFill);
 }
 
 void MainComponent::releaseResources()
