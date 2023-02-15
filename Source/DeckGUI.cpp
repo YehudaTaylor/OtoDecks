@@ -8,44 +8,37 @@
   ==============================================================================
 */
 
-#include <JuceHeader.h>
 #include "DeckGUI.h"
+#include "../JuceLibraryCode/JuceHeader.h"
+
 
 //==============================================================================
 DeckGUI::DeckGUI()
 {
-    // In your constructor, you should add any child components, and
-    // initialise any special settings that your component needs.
-
+    addAndMakeVisible(playButton);
+    addAndMakeVisible(stopButton);
+    addAndMakeVisible(loadButton);
+    addAndMakeVisible(volumeSlider);
+    addAndMakeVisible(positionSlider);
+    addAndMakeVisible(speedSlider);
 }
 
 DeckGUI::~DeckGUI()
 {
 }
 
-void DeckGUI::paint (juce::Graphics& g)
+void DeckGUI::paint(juce::Graphics& g)
 {
-    /* This demo code just fills the component's background and
-       draws some placeholder text to get you started.
-
-       You should replace everything in this method with your own
-       drawing code..
-    */
-
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));   // clear the background
-
-    g.setColour (juce::Colours::grey);
-    g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
-
-    g.setColour (juce::Colours::white);
-    g.setFont (14.0f);
-    g.drawText ("DeckGUI", getLocalBounds(),
-                juce::Justification::centred, true);   // draw some placeholder text
+    g.fillAll(
+        getLookAndFeel().findColour(ResizableWindow::backgroundColourId));
 }
 
 void DeckGUI::resized()
 {
-    // This method is where you should set the bounds of any child
-    // components that your component contains..
-
-}
+    float rowH = getHeight() / 6;
+    playButton.setBounds(0, 0, getWidth(), rowH);
+    stopButton.setBounds(0, rowH, getWidth(), rowH);
+    volumeSlider.setBounds(0, rowH * 2, getWidth(), rowH);
+    positionSlider.setBounds(0, rowH * 3, getWidth(), rowH);
+    speedSlider.setBounds(0, rowH * 4, getWidth(), rowH);
+    loadButton.setBounds(0, rowH * 5, getWidth(), rowH);

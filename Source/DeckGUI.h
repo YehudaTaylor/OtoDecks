@@ -10,7 +10,7 @@
 
 #pragma once
 
-#include <JuceHeader.h>
+#include "../JuceLibraryCode/JuceHeader.h"
 
 //==============================================================================
 /*
@@ -25,9 +25,9 @@ class DeckGUI : public juce::Component
     void resized() override;
 
   private:
-    TextButton playButton;
-    TextButton stopButton;
-    TextButton loadButton;
+    TextButton playButton{"Play"};
+    TextButton stopButton{"Stop"};
+    TextButton loadButton{"Load"};
     Slider volumeSlider;
     Slider positionSlider;
     Slider speedSlider;
