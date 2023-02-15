@@ -4,6 +4,8 @@
               jucerFormatVersion="1" defines="JUCE_MODAL_LOOPS_PERMITTED=1">
   <MAINGROUP id="mcJZqF" name="OtoDecks">
     <GROUP id="{356C603F-01E1-55B2-02A0-F2D89D9A59E6}" name="Source">
+      <FILE id="LfR0ZE" name="DeckGUI.cpp" compile="1" resource="0" file="Source/DeckGUI.cpp"/>
+      <FILE id="ghfmQI" name="DeckGUI.h" compile="0" resource="0" file="Source/DeckGUI.h"/>
       <FILE id="Kxky11" name="DJAudioPlayer.cpp" compile="1" resource="0"
             file="Source/DJAudioPlayer.cpp"/>
       <FILE id="UpFDTn" name="DJAudioPlayer.h" compile="0" resource="0" file="Source/DJAudioPlayer.h"/>
