@@ -102,5 +102,8 @@ void DeckGUI::filesDropped(const StringArray& files, int x, int y)
     for (String filename : files)
     {
         std::cout << "DeckGUI::filesDropped " << filename << std::endl;
+        URL fileURL = URL{File{filename}};
+        djAudioPlayer->loadURL(fileURL);
+        return;
     }
 }
