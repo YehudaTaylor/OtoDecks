@@ -14,16 +14,25 @@
 
 //==============================================================================
 /*
-*/
-class DeckGUI  : public juce::Component
+ */
+class DeckGUI : public juce::Component
 {
-public:
+  public:
     DeckGUI();
     ~DeckGUI() override;
 
-    void paint (juce::Graphics&) override;
+    void paint(juce::Graphics&) override;
     void resized() override;
 
-private:
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DeckGUI)
+  private:
+    TextButton playButton;
+    TextButton stopButton;
+    TextButton loadButton;
+    Slider volumeSlider;
+    Slider positionSlider;
+    Slider speedSlider;
+    FileChooser fChooser{"Select a file..."};
+
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DeckGUI)
 };
