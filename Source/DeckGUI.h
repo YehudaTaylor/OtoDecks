@@ -25,9 +25,9 @@ class DeckGUI : public juce::Component
     void resized() override;
 
   private:
-    TextButton playButton{"Play"};
-    TextButton stopButton{"Stop"};
-    TextButton loadButton{"Load"};
+    TextButton playButton{"PLAY"};
+    TextButton stopButton{"STOP"};
+    TextButton loadButton{"LOAD"};
     Slider volumeSlider;
     Slider positionSlider;
     Slider speedSlider;

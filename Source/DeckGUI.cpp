@@ -21,6 +21,10 @@ DeckGUI::DeckGUI()
     addAndMakeVisible(volumeSlider);
     addAndMakeVisible(positionSlider);
     addAndMakeVisible(speedSlider);
+
+    volumeSlider.setRange(0,1);
+    positionSlider.setRange(0,1);
+    speedSlider.setRange(0,1);
 }
 
 DeckGUI::~DeckGUI()
@@ -42,3 +46,4 @@ void DeckGUI::resized()
     positionSlider.setBounds(0, rowH * 3, getWidth(), rowH);
     speedSlider.setBounds(0, rowH * 4, getWidth(), rowH);
     loadButton.setBounds(0, rowH * 5, getWidth(), rowH);
+}

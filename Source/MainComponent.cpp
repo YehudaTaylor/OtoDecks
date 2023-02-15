@@ -32,25 +32,27 @@ MainComponent::MainComponent()
         setAudioChannels(0, 2);
     }
 
-    addAndMakeVisible(playButton);
-    addAndMakeVisible(stopButton);
-    addAndMakeVisible(posSlider);
-    addAndMakeVisible(gainSlider);
+    // addAndMakeVisible(playButton);
+    // addAndMakeVisible(stopButton);
+    // addAndMakeVisible(posSlider);
+    // addAndMakeVisible(gainSlider);
+    // addAndMakeVisible(loadButton);
     addAndMakeVisible(deck1);
 
     playButton.addListener(this);
     stopButton.addListener(this);
     gainSlider.addListener(this);
-    gainSlider.setRange(0, 1);
     posSlider.addListener(this);
+    loadButton.addListener(this);
+
+    gainSlider.setRange(0, 1);
     posSlider.setRange(0, 1);
 
     playButton.setButtonText("PLAY BUTTON");
     stopButton.setButtonText("STOP BUTTON");
-
-    addAndMakeVisible(loadButton);
-    loadButton.addListener(this);
     loadButton.setButtonText("LOAD");
+
+    
 
     // list of supported audio formats
     // for (int i = 0; i < formatManager.getNumKnownFormats(); i++)
@@ -121,13 +123,15 @@ void MainComponent::resized()
     // This is called when the MainContentComponent is resized.
     // If you add any child components, this is where you should
     // update their positions.
-    double rowH = getHeight() / 6;
-    playButton.setBounds(0, 0, getWidth(), rowH);
-    stopButton.setBounds(0, rowH, getWidth(), rowH);
-    loadButton.setBounds(0, rowH * 2, getWidth(), rowH);
-    posSlider.setBounds(0, rowH * 3, getWidth(), rowH);
-    gainSlider.setBounds(0, rowH * 4, getWidth(), rowH);
-    deck1.setBounds(0, rowH * 5, getWidth(), rowH);
+    // double rowH = getHeight() / 6;
+    // playButton.setBounds(0, 0, getWidth(), rowH);
+    // stopButton.setBounds(0, rowH, getWidth(), rowH);
+    // loadButton.setBounds(0, rowH * 2, getWidth(), rowH);
+    // posSlider.setBounds(0, rowH * 3, getWidth(), rowH);
+    // gainSlider.setBounds(0, rowH * 4, getWidth(), rowH);
+    // deck1.setBounds(0, rowH * 5, getWidth(), rowH);
+
+    deck1.setBounds(0,0, getWidth()/2, getHeight());
 }
 
 void MainComponent::buttonClicked(Button* button)
