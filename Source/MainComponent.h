@@ -44,18 +44,11 @@ class MainComponent : public AudioAppComponent,
   private:
     //==============================================================================
     // Your private member variables go here...
-
-    TextButton playButton{"PLAY"};
-    TextButton stopButton{"STOP"};
-
     DJAudioPlayer player1;
     DeckGUI deck1{&player1};
 
-    Slider posSlider;
-    juce::Slider gainSlider;
-
-    juce::TextButton loadButton;
-    juce::FileChooser fChooser{"Select a file..."};
+    DJAudioPlayer player2;
+    DeckGUI deck2{&player2};
 
     bool playing;
     double gain;

@@ -32,27 +32,8 @@ MainComponent::MainComponent()
         setAudioChannels(0, 2);
     }
 
-    // addAndMakeVisible(playButton);
-    // addAndMakeVisible(stopButton);
-    // addAndMakeVisible(posSlider);
-    // addAndMakeVisible(gainSlider);
-    // addAndMakeVisible(loadButton);
     addAndMakeVisible(deck1);
-
-    playButton.addListener(this);
-    stopButton.addListener(this);
-    gainSlider.addListener(this);
-    posSlider.addListener(this);
-    loadButton.addListener(this);
-
-    gainSlider.setRange(0, 1);
-    posSlider.setRange(0, 1);
-
-    playButton.setButtonText("PLAY BUTTON");
-    stopButton.setButtonText("STOP BUTTON");
-    loadButton.setButtonText("LOAD");
-
-    
+  
 
     // list of supported audio formats
     // for (int i = 0; i < formatManager.getNumKnownFormats(); i++)
@@ -77,20 +58,11 @@ void MainComponent::prepareToPlay(int samplesPerBlockExpected,
     gain = 0.5;
 
     player1.prepareToPlay(samplesPerBlockExpected, sampleRate);
-    // transportSource.prepareToPlay(samplesPerBlockExpected, sampleRate);
-    // posSlider.setRange(1, transportSource.getLengthInSeconds());
 }
 
 void MainComponent::getNextAudioBlock(
     const AudioSourceChannelInfo& bufferToFill)
 {
-    // if (!playing)
-    // {
-    //     bufferToFill.clearActiveBufferRegion();
-    //     return;
-    // }
-
-    // transportSource.getNextAudioBlock(bufferToFill);
     player1.getNextAudioBlock(bufferToFill);
 }
 
@@ -123,71 +95,16 @@ void MainComponent::resized()
     // This is called when the MainContentComponent is resized.
     // If you add any child components, this is where you should
     // update their positions.
-    // double rowH = getHeight() / 6;
-    // playButton.setBounds(0, 0, getWidth(), rowH);
-    // stopButton.setBounds(0, rowH, getWidth(), rowH);
-    // loadButton.setBounds(0, rowH * 2, getWidth(), rowH);
-    // posSlider.setBounds(0, rowH * 3, getWidth(), rowH);
-    // gainSlider.setBounds(0, rowH * 4, getWidth(), rowH);
-    // deck1.setBounds(0, rowH * 5, getWidth(), rowH);
 
     deck1.setBounds(0,0, getWidth()/2, getHeight());
 }
 
 void MainComponent::buttonClicked(Button* button)
 {
-    if (button == &playButton)
-    {
-        playing = true;
-        player1.play();
-    }
-    if (button == &stopButton)
-    {
-        playing = false;
-        player1.stop();
-    }
-    if (button == &loadButton)
-    {
-        // - configure the dialogue
-        auto fileChooserFlags = FileBrowserComponent::canSelectFiles;
-        // - launch out of the main thread
-        // - note how we use a lambda function which you've probably
-        // not seen before. Please do not worry too much about that
-        // but it is necessary as of JUCE 6.1
-        fChooser.launchAsync(fileChooserFlags,
-                             [this](const FileChooser& chooser) {
-                                 //  URL audioURL = URL{chooser.getResult()};
-                                 //  player1.loadURL(audioURL);
-                                 File chosenFile = chooser.getResult();
-                                 player1.loadURL(URL{chosenFile});
-                             });
-        std::cout << "Load button clicked" << std::endl;
-    }
-    // the code below does not work! browseForFileToOpen() causes an error
-    // if (button == &loadButton)
-    // {
-    //     FileChooser chooser("Select a Wave file to play...");
-    //     if (chooser.browseForFileToOpen())
-    //     {
-    //         URL audioURL = URL{chooser.getResult()};
-    //         player1.loadURL(audioURL);
-    //     }
-    // }
+
 }
 
 void MainComponent::sliderValueChanged(Slider* slider)
 {
-    if (slider == &gainSlider)
-    {
-        DBG("MainComponent::sliderValueChanged: gainSlider "
-            << gainSlider.getValue());
-        gain = gainSlider.getValue();
-        player1.setGain(gain);
-    }
-    if (slider == &posSlider)
-    {
-        DBG("MainComponent::sliderValueChanged: posSlider "
-            << posSlider.getValue());
-        player1.setPosition(posSlider.getValue());
-    }
+
 }
