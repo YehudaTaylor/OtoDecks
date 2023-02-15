@@ -54,16 +54,20 @@ MainComponent::~MainComponent()
 void MainComponent::prepareToPlay(int samplesPerBlockExpected,
                                   double sampleRate)
 {
-    playing = false;
-    gain = 0.5;
-
-    player1.prepareToPlay(samplesPerBlockExpected, sampleRate);
+    mixerSource.addInputSource(&player1, false);
+    mixerSource.addInputSource(&player2, false);
+    // note that this will call prepareToPlay
+    // automatically on the two players
+    mixerSource.prepareToPlay(samplesPerBlockExpected, sampleRate);
+    // so this is not needed:
+    // player1.prepareToPlay(samplesPerBlockExpected, sampleRate);
+    // player2.prepareToPlay(samplesPerBlockExpected, sampleRate);
 }
 
 void MainComponent::getNextAudioBlock(
     const AudioSourceChannelInfo& bufferToFill)
 {
-    player1.getNextAudioBlock(bufferToFill);
+    mixerSource.getNextAudioBlock(bufferToFill);
 }
 
 void MainComponent::releaseResources()
@@ -73,7 +77,10 @@ void MainComponent::releaseResources()
 
     // For more details, see the help for AudioProcessor::releaseResources()
     // transportSource.releaseResources();
+    mixerSource.removeAllInputs();
+    mixerSource.releaseResources();
     player1.releaseResources();
+    player2.releaseResources();
 }
 
 //==============================================================================

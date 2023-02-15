@@ -50,6 +50,8 @@ class MainComponent : public AudioAppComponent,
     DJAudioPlayer player2;
     DeckGUI deck2{&player2};
 
+    MixerAudioSource mixerSource;
+
     bool playing;
     double gain;
 
