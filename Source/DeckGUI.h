@@ -16,7 +16,9 @@
 //==============================================================================
 /*
  */
-class DeckGUI : public juce::Component
+class DeckGUI : public Component,
+                public Button::Listener,
+                public Slider::Listener
 {
   public:
     DeckGUI(DJAudioPlayer* _djAudioPlayer);
@@ -24,6 +26,9 @@ class DeckGUI : public juce::Component
 
     void paint(juce::Graphics&) override;
     void resized() override;
+
+    void buttonClicked(Button* button) override;
+    void sliderValueChanged(Slider* slider) override;
 
   private:
     TextButton playButton{"PLAY"};

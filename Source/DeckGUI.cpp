@@ -22,9 +22,16 @@ DeckGUI::DeckGUI(DJAudioPlayer* _djAudioPlayer) : djAudioPlayer{_djAudioPlayer}
     addAndMakeVisible(positionSlider);
     addAndMakeVisible(speedSlider);
 
-    volumeSlider.setRange(0,1);
-    positionSlider.setRange(0,1);
-    speedSlider.setRange(0,1);
+    volumeSlider.setRange(0.0, 1.0);
+    positionSlider.setRange(0.0, 1.0);
+    speedSlider.setRange(0.0, 100.0);
+
+    playButton.addListener(this);
+    stopButton.addListener(this);
+    volumeSlider.addListener(this);
+    positionSlider.addListener(this);
+    speedSlider.addListener(this);
+    loadButton.addListener(this);
 }
 
 DeckGUI::~DeckGUI()
@@ -46,4 +53,41 @@ void DeckGUI::resized()
     positionSlider.setBounds(0, rowH * 3, getWidth(), rowH);
     speedSlider.setBounds(0, rowH * 4, getWidth(), rowH);
     loadButton.setBounds(0, rowH * 5, getWidth(), rowH);
+}
+
+void DeckGUI::buttonClicked(Button* button)
+{
+    if (button == &playButton)
+    {
+        djAudioPlayer->setPosition(0);
+        djAudioPlayer->play();
+    }
+    if (button == &stopButton)
+    {
+        djAudioPlayer->stop();
+    }
+    if (button == &loadButton)
+    {
+        auto fileChooserFlags = FileBrowserComponent::canSelectFiles;
+        fChooser.launchAsync(fileChooserFlags,
+                             [this](const FileChooser& chooser) {
+                                 auto chosenFile = chooser.getResult();
+                                 djAudioPlayer->loadURL(URL{chosenFile});
+                             });
+    }
+}
+void DeckGUI::sliderValueChanged(Slider* slider)
+{
+    if (slider == &volumeSlider)
+    {
+        djAudioPlayer->setGain(slider->getValue());
+    }
+    if (slider == &positionSlider)
+    {
+        djAudioPlayer->setPositionRelative(slider->getValue());
+    }
+    if (slider == &speedSlider)
+    {
+        djAudioPlayer->setSpeed(slider->getValue());
+    }
 }
