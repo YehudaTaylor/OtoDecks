@@ -99,5 +99,8 @@ bool DeckGUI::isInterestedInFileDrag(const StringArray& files)
 }
 void DeckGUI::filesDropped(const StringArray& files, int x, int y)
 {
-    std::cout << "DeckGUI::filesDropped" << std::endl;
+    for (String filename : files)
+    {
+        std::cout << "DeckGUI::filesDropped " << filename << std::endl;
+    }
 }
