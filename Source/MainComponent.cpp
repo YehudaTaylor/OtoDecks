@@ -106,11 +106,3 @@ void MainComponent::resized()
     deck1.setBounds(0, 0, getWidth() / 2, getHeight());
     deck2.setBounds(getWidth() / 2, 0, getWidth() / 2, getHeight());
 }
-
-void MainComponent::buttonClicked(Button* button)
-{
-}
-
-void MainComponent::sliderValueChanged(Slider* slider)
-{
-}
