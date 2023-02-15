@@ -11,6 +11,7 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "DJAudioPlayer.h"
 
 //==============================================================================
 /*
@@ -18,7 +19,7 @@
 class DeckGUI : public juce::Component
 {
   public:
-    DeckGUI();
+    DeckGUI(DJAudioPlayer* _djAudioPlayer);
     ~DeckGUI() override;
 
     void paint(juce::Graphics&) override;
@@ -32,6 +33,8 @@ class DeckGUI : public juce::Component
     Slider positionSlider;
     Slider speedSlider;
     FileChooser fChooser{"Select a file..."};
+
+    DJAudioPlayer* djAudioPlayer;
 
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DeckGUI)

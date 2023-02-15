@@ -13,7 +13,7 @@
 
 
 //==============================================================================
-DeckGUI::DeckGUI()
+DeckGUI::DeckGUI(DJAudioPlayer* _djAudioPlayer) : djAudioPlayer{_djAudioPlayer}
 {
     addAndMakeVisible(playButton);
     addAndMakeVisible(stopButton);

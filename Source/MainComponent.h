@@ -49,7 +49,7 @@ class MainComponent : public AudioAppComponent,
     TextButton stopButton{"STOP"};
 
     DJAudioPlayer player1;
-    DeckGUI deck1;
+    DeckGUI deck1{&player1};
 
     Slider posSlider;
     juce::Slider gainSlider;
