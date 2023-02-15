@@ -36,6 +36,7 @@ MainComponent::MainComponent()
     addAndMakeVisible(stopButton);
     addAndMakeVisible(posSlider);
     addAndMakeVisible(gainSlider);
+    addAndMakeVisible(deck1);
 
     playButton.addListener(this);
     stopButton.addListener(this);
@@ -124,8 +125,9 @@ void MainComponent::resized()
     playButton.setBounds(0, 0, getWidth(), rowH);
     stopButton.setBounds(0, rowH, getWidth(), rowH);
     loadButton.setBounds(0, rowH * 2, getWidth(), rowH);
-    gainSlider.setBounds(0, rowH * 4, getWidth(), rowH);
     posSlider.setBounds(0, rowH * 3, getWidth(), rowH);
+    gainSlider.setBounds(0, rowH * 4, getWidth(), rowH);
+    deck1.setBounds(0, getHeight()/5 * 4, getWidth(), getHeight());
 }
 
 void MainComponent::buttonClicked(Button* button)

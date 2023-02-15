@@ -10,6 +10,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "DJAudioPlayer.h"
+#include "DeckGUI.h"
 
 //==============================================================================
 /*
@@ -48,6 +49,7 @@ class MainComponent : public AudioAppComponent,
     TextButton stopButton{"STOP"};
 
     DJAudioPlayer player1;
+    DeckGUI deck1;
 
     Slider posSlider;
     juce::Slider gainSlider;
