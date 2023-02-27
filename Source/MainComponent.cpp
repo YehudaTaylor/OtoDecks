@@ -42,6 +42,8 @@ MainComponent::MainComponent()
     //         formatManager.getKnownFormat(i)->getFormatName().toStdString();
     //     std::cout << i << " " << s << std::endl;
     // }
+
+    formatManager.registerBasicFormats();
 }
 
 MainComponent::~MainComponent()

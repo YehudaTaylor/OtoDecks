@@ -23,7 +23,9 @@ class DeckGUI : public Component,
                 public FileDragAndDropTarget
 {
   public:
-    DeckGUI(DJAudioPlayer* _djAudioPlayer);
+    DeckGUI(DJAudioPlayer* _djAudioPlayer,
+            AudioFormatManager& formatManagerToUse,
+            AudioThumbnailCache& cacheToUse);
     ~DeckGUI() override;
 
     void paint(juce::Graphics&) override;
@@ -47,7 +49,6 @@ class DeckGUI : public Component,
     DJAudioPlayer* djAudioPlayer;
 
     WaveformDisplay waveformDisplay;
-
 
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DeckGUI)

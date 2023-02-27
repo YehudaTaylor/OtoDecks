@@ -13,7 +13,11 @@
 
 
 //==============================================================================
-DeckGUI::DeckGUI(DJAudioPlayer* _djAudioPlayer) : djAudioPlayer{_djAudioPlayer}
+DeckGUI::DeckGUI(DJAudioPlayer* _djAudioPlayer,
+                 AudioFormatManager& formatManagerToUse,
+                 AudioThumbnailCache& cacheToUse)
+    : djAudioPlayer{_djAudioPlayer},
+      waveformDisplay(formatManagerToUse, cacheToUse)
 {
     addAndMakeVisible(playButton);
     addAndMakeVisible(stopButton);

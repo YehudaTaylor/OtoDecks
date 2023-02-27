@@ -38,11 +38,21 @@ class MainComponent : public AudioAppComponent
   private:
     //==============================================================================
     // Your private member variables go here...
-    DJAudioPlayer player1;
-    DeckGUI deck1{&player1};
+    AudioFormatManager formatManager;
+    // note we need to tell it how large the cache is. 20 files are ok for now.
+    AudioThumbnailCache thumbnailCache{20};
 
+    // DJAudioPlayer player1{formatManager};
+    // DeckGUI deckGUI1{&player1, formatManager, thumbnailCache};
+
+    DJAudioPlayer player1;
+    DeckGUI deck1{&player1, formatManager, thumbnailCache};
+
+    // DJAudioPlayer player2{formatManager};
+    // DeckGUI deckGUI2{&player2, formatManager, thumbnailCache};
     DJAudioPlayer player2;
-    DeckGUI deck2{&player2};
+    DeckGUI deck2{&player2, formatManager, thumbnailCache};
+
 
     MixerAudioSource mixerSource;
 

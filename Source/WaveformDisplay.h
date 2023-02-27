@@ -10,20 +10,23 @@
 
 #pragma once
 
-#include <JuceHeader.h>
+#include "../JuceLibraryCode/JuceHeader.h"
 
 //==============================================================================
 /*
-*/
-class WaveformDisplay  : public juce::Component
+ */
+class WaveformDisplay : public juce::Component
 {
-public:
-    WaveformDisplay();
+  public:
+    WaveformDisplay(AudioFormatManager& formatManagerToUse,
+                    AudioThumbnailCache& cacheToUse);
     ~WaveformDisplay() override;
 
-    void paint (juce::Graphics&) override;
+    void paint(juce::Graphics&) override;
     void resized() override;
 
-private:
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (WaveformDisplay)
+  private:
+    AudioThumbnail audioThumbnail;
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(WaveformDisplay)
 };
