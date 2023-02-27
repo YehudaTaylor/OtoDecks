@@ -19,6 +19,7 @@ WaveformDisplay::WaveformDisplay(AudioFormatManager& formatManagerToUse,
 {
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
+    audioThumbnail.addChangeListener(this);
 }
 
 WaveformDisplay::~WaveformDisplay()
@@ -66,4 +67,10 @@ void WaveformDisplay::loadURL(URL audioURL)
 {
     audioThumbnail.clear();
     fileLoaded = audioThumbnail.setSource(new URLInputSource(audioURL));
+}
+
+void WaveformDisplay::changeListenerCallback(ChangeBroadcaster* source)
+{
+    std::cout << "wfd: change received! " << std::endl;
+    repaint();
 }
