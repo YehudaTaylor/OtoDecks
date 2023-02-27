@@ -15,7 +15,7 @@
 //==============================================================================
 WaveformDisplay::WaveformDisplay(AudioFormatManager& formatManagerToUse,
                                  AudioThumbnailCache& cacheToUse)
-    : audioThumbnail(1000, formatManagerToUse, cacheToUse)
+    : audioThumbnail(1000, formatManagerToUse, cacheToUse), fileLoaded(false)
 {
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
@@ -51,4 +51,10 @@ void WaveformDisplay::resized()
 {
     // This method is where you should set the bounds of any child
     // components that your component contains..
+}
+
+void WaveformDisplay::loadURL(URL audioURL)
+{
+    audioThumbnail.clear();
+    fileLoaded = audioThumbnail.setSource(new URLInputSource(audioURL));
 }
