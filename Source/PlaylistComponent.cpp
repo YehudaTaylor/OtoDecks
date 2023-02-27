@@ -18,6 +18,9 @@ PlaylistComponent::PlaylistComponent()
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
     addAndMakeVisible(tableComponent);
+
+    tableComponent.getHeader().addColumn("Track title", 1, 400);
+    tableComponent.getHeader().addColumn("", 2, 200);
 }
 
 PlaylistComponent::~PlaylistComponent()
