@@ -12,6 +12,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "DJAudioPlayer.h"
+#include "WaveformDisplay.h"
 
 //==============================================================================
 /*
@@ -44,6 +45,9 @@ class DeckGUI : public Component,
     FileChooser fChooser{"Select a file..."};
 
     DJAudioPlayer* djAudioPlayer;
+
+    WaveformDisplay waveformDisplay;
+
 
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DeckGUI)

@@ -21,6 +21,8 @@ DeckGUI::DeckGUI(DJAudioPlayer* _djAudioPlayer) : djAudioPlayer{_djAudioPlayer}
     addAndMakeVisible(volumeSlider);
     addAndMakeVisible(positionSlider);
     addAndMakeVisible(speedSlider);
+    addAndMakeVisible(waveformDisplay);
+
 
     volumeSlider.setRange(0.0, 1.0);
     positionSlider.setRange(0.0, 1.0);
@@ -46,13 +48,14 @@ void DeckGUI::paint(juce::Graphics& g)
 
 void DeckGUI::resized()
 {
-    float rowH = getHeight() / 6;
+    float rowH = getHeight() / 8;
     playButton.setBounds(0, 0, getWidth(), rowH);
     stopButton.setBounds(0, rowH, getWidth(), rowH);
     volumeSlider.setBounds(0, rowH * 2, getWidth(), rowH);
     positionSlider.setBounds(0, rowH * 3, getWidth(), rowH);
     speedSlider.setBounds(0, rowH * 4, getWidth(), rowH);
-    loadButton.setBounds(0, rowH * 5, getWidth(), rowH);
+    waveformDisplay.setBounds(0, rowH * 5, getWidth(), rowH * 2);
+    loadButton.setBounds(0, rowH * 7, getWidth(), rowH);
 }
 
 void DeckGUI::buttonClicked(Button* button)
