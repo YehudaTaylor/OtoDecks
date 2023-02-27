@@ -11,6 +11,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "DJAudioPlayer.h"
 #include "DeckGUI.h"
+#include "PlaylistComponent.h"
 
 //==============================================================================
 /*
@@ -52,6 +53,8 @@ class MainComponent : public AudioAppComponent
 
     bool playing;
     double gain;
+
+    PlaylistComponent playlistComponent;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainComponent)
 };
