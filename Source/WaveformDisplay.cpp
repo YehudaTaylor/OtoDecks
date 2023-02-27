@@ -48,11 +48,12 @@ void WaveformDisplay::paint(juce::Graphics& g)
         g.setColour(Colours::lightgreen);
         audioThumbnail.drawChannel(g, getLocalBounds(), 0,
                                    audioThumbnail.getTotalLength(), 0, 1);
+        g.drawRect(position * getWidth(), 0, getWidth() / 20, getHeight());
     }
     else
     {
         g.setFont(24.0f);
-        g.drawText("Waveform here!", getLocalBounds(),
+        g.drawText("File not loaded...", getLocalBounds(),
                    juce::Justification::centred,
                    true); // draw some placeholder text
     }
