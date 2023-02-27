@@ -15,7 +15,8 @@
 //==============================================================================
 WaveformDisplay::WaveformDisplay(AudioFormatManager& formatManagerToUse,
                                  AudioThumbnailCache& cacheToUse)
-    : audioThumbnail(1000, formatManagerToUse, cacheToUse), fileLoaded(false)
+    : audioThumbnail(1000, formatManagerToUse, cacheToUse), fileLoaded(false),
+      position(0)
 {
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
@@ -73,4 +74,13 @@ void WaveformDisplay::changeListenerCallback(ChangeBroadcaster* source)
 {
     std::cout << "wfd: change received! " << std::endl;
     repaint();
+}
+
+void WaveformDisplay::setPositionRelative(double pos)
+{
+    if (pos != position)
+    {
+        position = pos;
+        repaint();
+    }
 }

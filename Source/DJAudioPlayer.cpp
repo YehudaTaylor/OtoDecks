@@ -119,3 +119,9 @@ void DJAudioPlayer::setGain(double gain)
         transportSource.setGain(gain);
     }
 }
+
+double DJAudioPlayer::getPositionRelative()
+{
+    return transportSource.getCurrentPosition() /
+           transportSource.getLengthInSeconds();
+}

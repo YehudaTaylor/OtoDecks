@@ -39,6 +39,9 @@ class DJAudioPlayer : public AudioSource
     /** set position in song relative to the position in the slider*/
     void setPositionRelative(double pos);
 
+    /** get the relative position of the play head */
+    double getPositionRelative();
+
   private:
     AudioFormatManager& formatManager;
     std::unique_ptr<AudioFormatReaderSource> readerSource;

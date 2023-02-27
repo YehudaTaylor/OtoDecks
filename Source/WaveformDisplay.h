@@ -26,12 +26,15 @@ class WaveformDisplay : public juce::Component, public ChangeListener
     void resized() override;
 
     void loadURL(URL audioURL);
-    void changeListenerCallback (ChangeBroadcaster *source) override;
+    void changeListenerCallback(ChangeBroadcaster* source) override;
+
+    /** set the relative position of the play head*/
+    void setPositionRelative(double pos);
 
   private:
     AudioThumbnail audioThumbnail;
     bool fileLoaded;
-
+    double position;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(WaveformDisplay)
 };
