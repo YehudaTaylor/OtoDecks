@@ -41,10 +41,19 @@ void WaveformDisplay::paint(juce::Graphics& g)
     g.drawRect(getLocalBounds(), 1); // draw an outline around the component
 
     g.setColour(juce::Colours::green);
-    g.setFont(24.0f);
-    g.drawText("Waveform here!", getLocalBounds(),
-               juce::Justification::centred,
-               true); // draw some placeholder text
+    if (fileLoaded)
+    {
+        g.setColour(Colours::lightgreen);
+        audioThumbnail.drawChannel(g, getLocalBounds(), 0,
+                                   audioThumbnail.getTotalLength(), 0, 1);
+    }
+    else
+    {
+        g.setFont(24.0f);
+        g.drawText("Waveform here!", getLocalBounds(),
+                   juce::Justification::centred,
+                   true); // draw some placeholder text
+    }
 }
 
 void WaveformDisplay::resized()
