@@ -76,11 +76,13 @@ void DeckGUI::buttonClicked(Button* button)
     if (button == &loadButton)
     {
         auto fileChooserFlags = FileBrowserComponent::canSelectFiles;
-        fChooser.launchAsync(fileChooserFlags,
-                             [this](const FileChooser& chooser) {
-                                 auto chosenFile = chooser.getResult();
-                                 djAudioPlayer->loadURL(URL{chosenFile});
-                             });
+        fChooser.launchAsync(
+            fileChooserFlags, [this](const FileChooser& chooser) {
+                auto chosenFile = chooser.getResult();
+                djAudioPlayer->loadURL(URL{chosenFile});
+                // and now the waveformDisplay as well
+                waveformDisplay.loadURL(URL{chooser.getResult()});
+            });
     }
 }
 void DeckGUI::sliderValueChanged(Slider* slider)
