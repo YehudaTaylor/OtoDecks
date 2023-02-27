@@ -10,9 +10,10 @@
 
 #include "DJAudioPlayer.h"
 
-DJAudioPlayer::DJAudioPlayer()
+DJAudioPlayer::DJAudioPlayer(AudioFormatManager& _formatManager)
+    : formatManager(_formatManager)
 {
-    formatManager.registerBasicFormats();
+    // formatManager.registerBasicFormats();
 }
 DJAudioPlayer::~DJAudioPlayer()
 {

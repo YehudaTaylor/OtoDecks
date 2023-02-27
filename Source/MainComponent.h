@@ -42,17 +42,11 @@ class MainComponent : public AudioAppComponent
     // note we need to tell it how large the cache is. 20 files are ok for now.
     AudioThumbnailCache thumbnailCache{20};
 
-    // DJAudioPlayer player1{formatManager};
-    // DeckGUI deckGUI1{&player1, formatManager, thumbnailCache};
-
-    DJAudioPlayer player1;
+    DJAudioPlayer player1{formatManager};
     DeckGUI deck1{&player1, formatManager, thumbnailCache};
 
-    // DJAudioPlayer player2{formatManager};
-    // DeckGUI deckGUI2{&player2, formatManager, thumbnailCache};
-    DJAudioPlayer player2;
+    DJAudioPlayer player2{formatManager};
     DeckGUI deck2{&player2, formatManager, thumbnailCache};
-
 
     MixerAudioSource mixerSource;
 
