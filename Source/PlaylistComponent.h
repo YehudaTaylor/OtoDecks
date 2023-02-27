@@ -14,16 +14,18 @@
 
 //==============================================================================
 /*
-*/
-class PlaylistComponent  : public juce::Component
+ */
+class PlaylistComponent : public juce::Component
 {
-public:
+  public:
     PlaylistComponent();
     ~PlaylistComponent() override;
 
-    void paint (juce::Graphics&) override;
+    void paint(juce::Graphics&) override;
     void resized() override;
 
-private:
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PlaylistComponent)
+  private:
+    TableListBox tableComponent;
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlaylistComponent)
 };
