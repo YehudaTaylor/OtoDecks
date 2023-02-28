@@ -13,6 +13,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "DJAudioPlayer.h"
 #include "WaveformDisplay.h"
+#include "PlaybackControls.h"
 
 //==============================================================================
 /*
@@ -21,7 +22,7 @@ class DeckGUI : public Component,
                 public Button::Listener,
                 public Slider::Listener,
                 public FileDragAndDropTarget,
-                public Timer
+                public Timer, public ChangeListener
 {
   public:
     DeckGUI(DJAudioPlayer* _djAudioPlayer,
@@ -40,6 +41,8 @@ class DeckGUI : public Component,
 
     void timerCallback() override;
 
+    void changeListenerCallback(ChangeBroadcaster* source) override;
+
   private:
     TextButton playButton{"PLAY"};
     TextButton stopButton{"STOP"};
@@ -47,11 +50,14 @@ class DeckGUI : public Component,
     Slider volumeSlider;
     Slider positionSlider;
     Slider speedSlider;
+
     FileChooser fChooser{"Select a file..."};
 
     DJAudioPlayer* djAudioPlayer;
 
     WaveformDisplay waveformDisplay;
+
+    PlaybackControls playbackControls{djAudioPlayer};
 
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DeckGUI)

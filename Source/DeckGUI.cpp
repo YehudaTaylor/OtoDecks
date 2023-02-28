@@ -26,6 +26,7 @@ DeckGUI::DeckGUI(DJAudioPlayer* _djAudioPlayer,
     addAndMakeVisible(positionSlider);
     addAndMakeVisible(speedSlider);
     addAndMakeVisible(waveformDisplay);
+    addAndMakeVisible(playbackControls);
 
 
     volumeSlider.setRange(0.0, 1.0);
@@ -40,6 +41,8 @@ DeckGUI::DeckGUI(DJAudioPlayer* _djAudioPlayer,
     loadButton.addListener(this);
 
     startTimer(200);
+
+    // playbackControls.addChangeListener(this);
 }
 
 DeckGUI::~DeckGUI()
@@ -55,7 +58,7 @@ void DeckGUI::paint(juce::Graphics& g)
 
 void DeckGUI::resized()
 {
-    float rowH = getHeight() / 8;
+    float rowH = getHeight() / 10;
     playButton.setBounds(0, 0, getWidth(), rowH);
     stopButton.setBounds(0, rowH, getWidth(), rowH);
     volumeSlider.setBounds(0, rowH * 2, getWidth(), rowH);
@@ -63,6 +66,7 @@ void DeckGUI::resized()
     speedSlider.setBounds(0, rowH * 4, getWidth(), rowH);
     waveformDisplay.setBounds(0, rowH * 5, getWidth(), rowH * 2);
     loadButton.setBounds(0, rowH * 7, getWidth(), rowH);
+    playbackControls.setBounds(0, rowH * 9, getWidth(), rowH);
 }
 
 void DeckGUI::buttonClicked(Button* button)
@@ -122,6 +126,12 @@ void DeckGUI::filesDropped(const StringArray& files, int x, int y)
 
 void DeckGUI::timerCallback()
 {
-    DBG("DeckGUI::timerCallback");
+    // DBG("DeckGUI::timerCallback");
     waveformDisplay.setPositionRelative(djAudioPlayer->getPositionRelative());
+}
+
+void DeckGUI::changeListenerCallback(ChangeBroadcaster* source)
+{
+    std::cout << "DeckGUI::changeListenerCallback: " << source << std::endl;
+    std::cout << "DeckGUI::changeListenerCallback: change received! " << std::endl;
 }

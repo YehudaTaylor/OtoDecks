@@ -125,3 +125,31 @@ double DJAudioPlayer::getPositionRelative()
     return transportSource.getCurrentPosition() /
            transportSource.getLengthInSeconds();
 }
+
+void DJAudioPlayer::skipForward(double amount)
+{
+    if (amount < 0 || amount > transportSource.getLengthInSeconds())
+    {
+        std::cout << "DJAudioPlayer::skipForward: warning set position "
+                  << amount << " greater than length "
+                  << transportSource.getLengthInSeconds() << std::endl;
+        return;
+    }
+    double currentPos = transportSource.getCurrentPosition();
+    double newPos = currentPos + amount;
+    transportSource.setPosition(newPos);
+}
+
+void DJAudioPlayer::skipBackward(double amount)
+{
+    if (amount < 0 || amount > transportSource.getLengthInSeconds())
+    {
+        std::cout << "DJAudioPlayer::skipForward: warning set position "
+                  << amount << " greater than length "
+                  << transportSource.getLengthInSeconds() << std::endl;
+        return;
+    }
+    double currentPos = transportSource.getCurrentPosition();
+    double newPos = currentPos - amount;
+    transportSource.setPosition(newPos);
+}

@@ -41,6 +41,10 @@ class DJAudioPlayer : public AudioSource
 
     /** get the relative position of the play head */
     double getPositionRelative();
+    /** skip forward in the track by amount of seconds*/
+    void skipForward(double amount);
+    /** skip backward in the track by amount of seconds*/
+    void skipBackward(double amount);
 
   private:
     AudioFormatManager& formatManager;
