@@ -19,8 +19,10 @@ PlaylistComponent::PlaylistComponent()
     // initialise any special settings that your component needs.
     addAndMakeVisible(tableComponent);
     addAndMakeVisible(libraryComponent);
+    addAndMakeVisible(textEditor);
 
     libraryComponent.addChangeListener(this);
+    textEditor.addListener(this);
 
     trackURLs = libraryComponent.getTrackURLs();
 
@@ -28,11 +30,6 @@ PlaylistComponent::PlaylistComponent()
     tableComponent.getHeader().addColumn("", 2, 200);
 
     tableComponent.setModel(this);
-
-    trackTitles.push_back("Track 1");
-    trackTitles.push_back("Track 2");
-    trackTitles.push_back("Track 3");
-    trackTitles.push_back("Track 4");
 }
 
 PlaylistComponent::~PlaylistComponent()
@@ -68,16 +65,11 @@ void PlaylistComponent::resized()
     float rowH = getHeight() / 3;
     tableComponent.setBounds(0, 0, getWidth(), rowH);
     libraryComponent.setBounds(0, rowH, getWidth(), rowH);
-
-    // trackURLs = libraryComponent.getTrackURLs();
-    // std::cout << "PlaylistComponent::resized. Number of tracks: "
-    //           << trackURLs.size() << std::endl;
-    // tableComponent.updateContent();
+    textEditor.setBounds(0, rowH * 2, getWidth(), rowH);
 }
 
 int PlaylistComponent::getNumRows()
 {
-    // return trackTitles.size();
     return trackURLs.size();
 }
 void PlaylistComponent::paintRowBackground(Graphics& g, int rowNumber,
@@ -98,9 +90,7 @@ void PlaylistComponent::paintRowBackground(Graphics& g, int rowNumber,
 void PlaylistComponent::paintCell(Graphics& g, int rowNumber, int columnId,
                                   int width, int height, bool rowIsSelected)
 {
-    // g.drawText(trackTitles[rowNumber], // the important bit
-    //            2, 0, width - 4, height, Justification::centredLeft, true);
-    g.drawText(trackURLs[rowNumber].toString(false), // the important bit
+    g.drawText(trackURLs[rowNumber].getFileName(), // the important bit
                2, 0, width - 4, height, Justification::centredLeft, true);
 }
 
@@ -133,7 +123,10 @@ void PlaylistComponent::buttonClicked(Button* button)
 {
     int id = std::stoi(button->getComponentID().toStdString());
     // DBG("PlaylistComponent::buttonClicked " << trackTitles[id]);
-    DBG("PlaylistComponent::buttonClicked " << trackURLs[id].toString(false));
+    // DBG("PlaylistComponent::buttonClicked " <<
+    // trackURLs[id].toString(false));
+
+    DBG("PlaylistComponent::buttonClicked " << trackURLs[id].getFileName());
 }
 
 // void PlaylistComponent::tableColumnsChanged (TableHeaderComponent *)
@@ -153,4 +146,34 @@ void PlaylistComponent::changeListenerCallback(ChangeBroadcaster* source)
         << "PlaylistComponent::changeListenerCallback. Number of tracks: "
         << trackURLs.size() << std::endl;
     tableComponent.updateContent();
+}
+
+
+void PlaylistComponent::textEditorTextChanged(TextEditor&)
+{
+    std::cout << "PlaylistComponent::textEditorTextChanged, current text: "
+              << textEditor.getText() << std::endl;
+
+    trackURLs = libraryComponent.getTrackURLs();
+    std::vector<URL> matchingURLs;
+
+    for (URL fileURL : trackURLs)
+    {
+        if (fileURL.toString(false).toStdString().find(
+                textEditor.getText().toStdString()) != std::string::npos)
+        {
+            matchingURLs.push_back(fileURL);
+            std::cout << "PlaylistComponent::textEditorTextChanged match found"
+                      << std::endl;
+            std::cout << "PlC::teChanged filename: " << fileURL.getFileName()
+                      << std::endl;
+        }
+    }
+
+    trackURLs = matchingURLs;
+    tableComponent.updateContent();
+}
+void PlaylistComponent::textEditorReturnKeyPressed(TextEditor&)
+{
+    std::cout << "PlaylistComponent::textEditorReturnKeyPressed" << std::endl;
 }

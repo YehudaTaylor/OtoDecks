@@ -22,7 +22,8 @@
 class PlaylistComponent : public juce::Component,
                           public TableListBoxModel,
                           public Button::Listener,
-                          public ChangeListener
+                          public ChangeListener,
+                          public TextEditor::Listener
 {
   public:
     PlaylistComponent();
@@ -48,11 +49,15 @@ class PlaylistComponent : public juce::Component,
     // void tableColumnsChanged(TableHeaderComponent*) override;
     void changeListenerCallback(ChangeBroadcaster* source) override;
 
+    void textEditorTextChanged(TextEditor &) override;
+    void textEditorReturnKeyPressed(TextEditor &) override;
+
   private:
     LibraryComponent libraryComponent;
     TableListBox tableComponent;
-    std::vector<std::string> trackTitles;
     std::vector<URL> trackURLs;
+
+    TextEditor textEditor{"Search for a track"};
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlaylistComponent)
 };
