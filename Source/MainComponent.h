@@ -43,18 +43,18 @@ class MainComponent : public AudioAppComponent
     // note we need to tell it how large the cache is. 20 files are ok for now.
     AudioThumbnailCache thumbnailCache{20};
 
+    PlaylistComponent playlistComponent;
+
     DJAudioPlayer player1{formatManager};
-    DeckGUI deck1{&player1, formatManager, thumbnailCache};
+    DeckGUI deck1{&player1, formatManager, thumbnailCache, &playlistComponent};
 
     DJAudioPlayer player2{formatManager};
-    DeckGUI deck2{&player2, formatManager, thumbnailCache};
+    DeckGUI deck2{&player2, formatManager, thumbnailCache, &playlistComponent};
 
     MixerAudioSource mixerSource;
 
     bool playing;
     double gain;
-
-    PlaylistComponent playlistComponent;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainComponent)
 };

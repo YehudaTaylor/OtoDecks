@@ -127,6 +127,8 @@ void PlaylistComponent::buttonClicked(Button* button)
     // trackURLs[id].toString(false));
 
     DBG("PlaylistComponent::buttonClicked " << trackURLs[id].getFileName());
+
+    sendActionMessage(trackURLs[id].toString(false));
 }
 
 // void PlaylistComponent::tableColumnsChanged (TableHeaderComponent *)

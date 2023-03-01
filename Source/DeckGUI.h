@@ -14,6 +14,7 @@
 #include "DJAudioPlayer.h"
 #include "WaveformDisplay.h"
 #include "PlaybackControls.h"
+#include "PlaylistComponent.h"
 
 //==============================================================================
 /*
@@ -22,12 +23,12 @@ class DeckGUI : public Component,
                 public Button::Listener,
                 public Slider::Listener,
                 public FileDragAndDropTarget,
-                public Timer, public ChangeListener
+                public Timer, public ChangeListener, public ActionListener
 {
   public:
     DeckGUI(DJAudioPlayer* _djAudioPlayer,
             AudioFormatManager& formatManagerToUse,
-            AudioThumbnailCache& cacheToUse);
+            AudioThumbnailCache& cacheToUse, PlaylistComponent* _playlistComponent);
     ~DeckGUI() override;
 
     void paint(juce::Graphics&) override;
@@ -42,6 +43,7 @@ class DeckGUI : public Component,
     void timerCallback() override;
 
     void changeListenerCallback(ChangeBroadcaster* source) override;
+    void actionListenerCallback(const String &message) override;
 
   private:
     TextButton playButton{"PLAY"};
@@ -58,6 +60,8 @@ class DeckGUI : public Component,
     WaveformDisplay waveformDisplay;
 
     PlaybackControls playbackControls{djAudioPlayer};
+
+    PlaylistComponent* playlistComponent;
 
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DeckGUI)

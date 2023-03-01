@@ -15,9 +15,11 @@
 //==============================================================================
 DeckGUI::DeckGUI(DJAudioPlayer* _djAudioPlayer,
                  AudioFormatManager& formatManagerToUse,
-                 AudioThumbnailCache& cacheToUse)
+                 AudioThumbnailCache& cacheToUse,
+                 PlaylistComponent* _playlistComponent)
     : djAudioPlayer{_djAudioPlayer},
-      waveformDisplay(formatManagerToUse, cacheToUse)
+      waveformDisplay(formatManagerToUse, cacheToUse),
+      playlistComponent(_playlistComponent)
 {
     addAndMakeVisible(playButton);
     addAndMakeVisible(stopButton);
@@ -39,6 +41,8 @@ DeckGUI::DeckGUI(DJAudioPlayer* _djAudioPlayer,
     positionSlider.addListener(this);
     speedSlider.addListener(this);
     loadButton.addListener(this);
+
+    playlistComponent->addActionListener(this);
 
     startTimer(200);
 
@@ -120,6 +124,7 @@ void DeckGUI::filesDropped(const StringArray& files, int x, int y)
         std::cout << "DeckGUI::filesDropped " << filename << std::endl;
         URL fileURL = URL{File{filename}};
         djAudioPlayer->loadURL(fileURL);
+        waveformDisplay.loadURL(fileURL);
         return;
     }
 }
@@ -133,5 +138,17 @@ void DeckGUI::timerCallback()
 void DeckGUI::changeListenerCallback(ChangeBroadcaster* source)
 {
     std::cout << "DeckGUI::changeListenerCallback: " << source << std::endl;
-    std::cout << "DeckGUI::changeListenerCallback: change received! " << std::endl;
+    std::cout << "DeckGUI::changeListenerCallback: change received! "
+              << std::endl;
+}
+
+void DeckGUI::actionListenerCallback(const String& message)
+{
+    std::cout << "DeckGUI::actionListenerCallback, message: " << message
+              << std::endl;
+    // URL fileURL = URL{File{message}};
+    URL fileURL = URL{message};
+    djAudioPlayer->loadURL(fileURL);
+    waveformDisplay.loadURL(fileURL);
+    return;
 }
