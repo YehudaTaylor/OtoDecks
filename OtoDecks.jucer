@@ -4,6 +4,10 @@
               jucerFormatVersion="1" defines="JUCE_MODAL_LOOPS_PERMITTED=1">
   <MAINGROUP id="mcJZqF" name="OtoDecks">
     <GROUP id="{356C603F-01E1-55B2-02A0-F2D89D9A59E6}" name="Source">
+      <FILE id="wU0Gd3" name="LibraryComponent.cpp" compile="1" resource="0"
+            file="Source/LibraryComponent.cpp"/>
+      <FILE id="WhwXTS" name="LibraryComponent.h" compile="0" resource="0"
+            file="Source/LibraryComponent.h"/>
       <FILE id="T2ZnUk" name="PlaybackControls.cpp" compile="1" resource="0"
             file="Source/PlaybackControls.cpp"/>
       <FILE id="rJo2x4" name="PlaybackControls.h" compile="0" resource="0"

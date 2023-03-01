@@ -10,6 +10,7 @@
 
 #pragma once
 
+#include "LibraryComponent.h"
 #include <JuceHeader.h>
 #include <string>
 #include <vector>
@@ -18,7 +19,10 @@
 //==============================================================================
 /*
  */
-class PlaylistComponent : public juce::Component, public TableListBoxModel, public Button::Listener
+class PlaylistComponent : public juce::Component,
+                          public TableListBoxModel,
+                          public Button::Listener,
+                          public ChangeListener
 {
   public:
     PlaylistComponent();
@@ -41,9 +45,14 @@ class PlaylistComponent : public juce::Component, public TableListBoxModel, publ
 
     void buttonClicked(Button* button) override;
 
+    // void tableColumnsChanged(TableHeaderComponent*) override;
+    void changeListenerCallback(ChangeBroadcaster* source) override;
+
   private:
+    LibraryComponent libraryComponent;
     TableListBox tableComponent;
     std::vector<std::string> trackTitles;
+    std::vector<URL> trackURLs;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlaylistComponent)
 };

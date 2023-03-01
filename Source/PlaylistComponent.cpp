@@ -18,6 +18,11 @@ PlaylistComponent::PlaylistComponent()
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
     addAndMakeVisible(tableComponent);
+    addAndMakeVisible(libraryComponent);
+
+    libraryComponent.addChangeListener(this);
+
+    trackURLs = libraryComponent.getTrackURLs();
 
     tableComponent.getHeader().addColumn("Track title", 1, 400);
     tableComponent.getHeader().addColumn("", 2, 200);
@@ -60,12 +65,20 @@ void PlaylistComponent::resized()
 {
     // This method is where you should set the bounds of any child
     // components that your component contains..
-    tableComponent.setBounds(0, 0, getWidth(), getHeight());
+    float rowH = getHeight() / 3;
+    tableComponent.setBounds(0, 0, getWidth(), rowH);
+    libraryComponent.setBounds(0, rowH, getWidth(), rowH);
+
+    // trackURLs = libraryComponent.getTrackURLs();
+    // std::cout << "PlaylistComponent::resized. Number of tracks: "
+    //           << trackURLs.size() << std::endl;
+    // tableComponent.updateContent();
 }
 
 int PlaylistComponent::getNumRows()
 {
-    return trackTitles.size();
+    // return trackTitles.size();
+    return trackURLs.size();
 }
 void PlaylistComponent::paintRowBackground(Graphics& g, int rowNumber,
                                            int width, int height,
@@ -85,7 +98,9 @@ void PlaylistComponent::paintRowBackground(Graphics& g, int rowNumber,
 void PlaylistComponent::paintCell(Graphics& g, int rowNumber, int columnId,
                                   int width, int height, bool rowIsSelected)
 {
-    g.drawText(trackTitles[rowNumber], // the important bit
+    // g.drawText(trackTitles[rowNumber], // the important bit
+    //            2, 0, width - 4, height, Justification::centredLeft, true);
+    g.drawText(trackURLs[rowNumber].toString(false), // the important bit
                2, 0, width - 4, height, Justification::centredLeft, true);
 }
 
@@ -117,5 +132,25 @@ Component* PlaylistComponent::refreshComponentForCell(
 void PlaylistComponent::buttonClicked(Button* button)
 {
     int id = std::stoi(button->getComponentID().toStdString());
-    DBG("PlaylistComponent::buttonClicked " << trackTitles[id]);
+    // DBG("PlaylistComponent::buttonClicked " << trackTitles[id]);
+    DBG("PlaylistComponent::buttonClicked " << trackURLs[id].toString(false));
+}
+
+// void PlaylistComponent::tableColumnsChanged (TableHeaderComponent *)
+// {
+
+// }
+
+void PlaylistComponent::changeListenerCallback(ChangeBroadcaster* source)
+{
+    // std::cout << "PlaylistComponent::changeListenerCallback: " << source <<
+    // std::endl;
+    std::cout << "PlaylistComponent::changeListenerCallback: change received! "
+              << std::endl;
+
+    trackURLs = libraryComponent.getTrackURLs();
+    std::cout
+        << "PlaylistComponent::changeListenerCallback. Number of tracks: "
+        << trackURLs.size() << std::endl;
+    tableComponent.updateContent();
 }
