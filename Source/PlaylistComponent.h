@@ -27,7 +27,7 @@ class PlaylistComponent : public juce::Component,
                           public ActionBroadcaster
 {
   public:
-    PlaylistComponent();
+    PlaylistComponent(AudioFormatManager& formatManager);
     ~PlaylistComponent() override;
 
     void paint(juce::Graphics&) override;
@@ -53,7 +53,12 @@ class PlaylistComponent : public juce::Component,
     void textEditorTextChanged(TextEditor &) override;
     void textEditorReturnKeyPressed(TextEditor &) override;
 
+    // void getTrackMetaData();
+
+    String getCellMetaData(int rowNumber, int columnId);
+
   private:
+    AudioFormatManager& formatManager;
     LibraryComponent libraryComponent;
     TableListBox tableComponent;
     std::vector<URL> trackURLs;

@@ -13,7 +13,7 @@
 
 
 //==============================================================================
-PlaylistComponent::PlaylistComponent()
+PlaylistComponent::PlaylistComponent(AudioFormatManager& _formatManager) : formatManager(_formatManager)
 {
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
@@ -26,8 +26,10 @@ PlaylistComponent::PlaylistComponent()
 
     trackURLs = libraryComponent.getTrackURLs();
 
-    tableComponent.getHeader().addColumn("Track title", 1, 400);
-    tableComponent.getHeader().addColumn("", 2, 200);
+    tableComponent.getHeader().addColumn("Track title", 1, 300);
+    tableComponent.getHeader().addColumn("Action", 2, 100);
+    tableComponent.getHeader().addColumn("File type", 3, 100);
+    tableComponent.getHeader().addColumn("Track length", 4, 100);
 
     tableComponent.setModel(this);
 }
@@ -38,24 +40,11 @@ PlaylistComponent::~PlaylistComponent()
 
 void PlaylistComponent::paint(juce::Graphics& g)
 {
-    /* This demo code just fills the component's background and
-       draws some placeholder text to get you started.
-
-       You should replace everything in this method with your own
-       drawing code..
-    */
-
     g.fillAll(getLookAndFeel().findColour(
         juce::ResizableWindow::backgroundColourId)); // clear the background
 
     g.setColour(juce::Colours::grey);
     g.drawRect(getLocalBounds(), 1); // draw an outline around the component
-
-    g.setColour(juce::Colours::white);
-    g.setFont(14.0f);
-    g.drawText("PlaylistComponent", getLocalBounds(),
-               juce::Justification::centred,
-               true); // draw some placeholder text
 }
 
 void PlaylistComponent::resized()
@@ -90,7 +79,9 @@ void PlaylistComponent::paintRowBackground(Graphics& g, int rowNumber,
 void PlaylistComponent::paintCell(Graphics& g, int rowNumber, int columnId,
                                   int width, int height, bool rowIsSelected)
 {
-    g.drawText(trackURLs[rowNumber].getFileName(), // the important bit
+    String text = getCellMetaData(rowNumber, columnId);
+
+    g.drawText(text, // the important bit
                2, 0, width - 4, height, Justification::centredLeft, true);
 }
 
@@ -109,7 +100,7 @@ Component* PlaylistComponent::refreshComponentForCell(
     {
         if (existingComponentToUpdate == nullptr)
         {
-            TextButton* btn = new TextButton("play");
+            TextButton* btn = new TextButton("Load to deck");
             String id{std::to_string(rowNumber)};
             btn->setComponentID(id);
             btn->addListener(this);
@@ -122,12 +113,7 @@ Component* PlaylistComponent::refreshComponentForCell(
 void PlaylistComponent::buttonClicked(Button* button)
 {
     int id = std::stoi(button->getComponentID().toStdString());
-    // DBG("PlaylistComponent::buttonClicked " << trackTitles[id]);
-    // DBG("PlaylistComponent::buttonClicked " <<
-    // trackURLs[id].toString(false));
-
     DBG("PlaylistComponent::buttonClicked " << trackURLs[id].getFileName());
-
     sendActionMessage(trackURLs[id].toString(false));
 }
 
@@ -138,8 +124,6 @@ void PlaylistComponent::buttonClicked(Button* button)
 
 void PlaylistComponent::changeListenerCallback(ChangeBroadcaster* source)
 {
-    // std::cout << "PlaylistComponent::changeListenerCallback: " << source <<
-    // std::endl;
     std::cout << "PlaylistComponent::changeListenerCallback: change received! "
               << std::endl;
 
@@ -148,6 +132,8 @@ void PlaylistComponent::changeListenerCallback(ChangeBroadcaster* source)
         << "PlaylistComponent::changeListenerCallback. Number of tracks: "
         << trackURLs.size() << std::endl;
     tableComponent.updateContent();
+
+    // getTrackMetaData();
 }
 
 
@@ -178,4 +164,52 @@ void PlaylistComponent::textEditorTextChanged(TextEditor&)
 void PlaylistComponent::textEditorReturnKeyPressed(TextEditor&)
 {
     std::cout << "PlaylistComponent::textEditorReturnKeyPressed" << std::endl;
+}
+
+// void PlaylistComponent::getTrackMetaData()
+// {
+//     for (URL fileURL : trackURLs)
+//     {
+//         juce::File audioFile{fileURL.toString(false)};
+
+//         std::cout << "PlaylistComponent::getTrackMetaData file extension: "
+//                   << audioFile.getFileExtension() << std::endl;
+//         audioFile.getSize();
+//         audioFile.getFileName();
+//     }
+// }
+
+String PlaylistComponent::getCellMetaData(int rowNumber, int columnId)
+{
+    juce::File audioFile{trackURLs[rowNumber].toString(false)};
+
+    String text = "Default text";
+    
+    if (columnId == 1)
+    {
+        text = audioFile.getFileNameWithoutExtension();
+    }
+    if (columnId == 3)
+    {
+        text = audioFile.getFileExtension();
+    }
+    if (columnId == 4)
+    {
+        ScopedPointer<AudioFormatReader> reader =
+        // auto* reader =
+            formatManager.createReaderFor(
+                trackURLs[rowNumber].createInputStream(false));
+        if (reader != nullptr)
+        {
+            double seconds = reader->lengthInSamples/ reader->sampleRate;
+            RelativeTime relativeTime{seconds};
+            String trackLength = relativeTime.getDescription();
+            text = trackLength;
+            std::cout
+                << "PlaylistComponent::getCellMetaData track length: "
+                << trackLength << std::endl;
+        }
+    }
+
+    return text;
 }
