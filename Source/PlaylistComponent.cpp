@@ -24,7 +24,7 @@ PlaylistComponent::PlaylistComponent(AudioFormatManager& _formatManager) : forma
     libraryComponent.addChangeListener(this);
     textEditor.addListener(this);
 
-    trackURLs = libraryComponent.getTrackURLs();
+    updateLibraryList(libraryComponent.getTrackURLs());
 
     tableComponent.getHeader().addColumn("Track title", 1, 300);
     tableComponent.getHeader().addColumn("Action", 2, 100);
@@ -117,23 +117,13 @@ void PlaylistComponent::buttonClicked(Button* button)
     sendActionMessage(trackURLs[id].toString(false));
 }
 
-// void PlaylistComponent::tableColumnsChanged (TableHeaderComponent *)
-// {
-
-// }
-
 void PlaylistComponent::changeListenerCallback(ChangeBroadcaster* source)
 {
     std::cout << "PlaylistComponent::changeListenerCallback: change received! "
               << std::endl;
 
-    trackURLs = libraryComponent.getTrackURLs();
-    std::cout
-        << "PlaylistComponent::changeListenerCallback. Number of tracks: "
-        << trackURLs.size() << std::endl;
+    updateLibraryList(libraryComponent.getTrackURLs());
     tableComponent.updateContent();
-
-    // getTrackMetaData();
 }
 
 
@@ -142,7 +132,7 @@ void PlaylistComponent::textEditorTextChanged(TextEditor&)
     std::cout << "PlaylistComponent::textEditorTextChanged, current text: "
               << textEditor.getText() << std::endl;
 
-    trackURLs = libraryComponent.getTrackURLs();
+    updateLibraryList(libraryComponent.getTrackURLs());
     std::vector<URL> matchingURLs;
 
     for (URL fileURL : trackURLs)
@@ -151,33 +141,18 @@ void PlaylistComponent::textEditorTextChanged(TextEditor&)
                 textEditor.getText().toStdString()) != std::string::npos)
         {
             matchingURLs.push_back(fileURL);
-            std::cout << "PlaylistComponent::textEditorTextChanged match found"
-                      << std::endl;
             std::cout << "PlC::teChanged filename: " << fileURL.getFileName()
                       << std::endl;
         }
     }
 
-    trackURLs = matchingURLs;
+    updateLibraryList(matchingURLs);
     tableComponent.updateContent();
 }
 void PlaylistComponent::textEditorReturnKeyPressed(TextEditor&)
 {
     std::cout << "PlaylistComponent::textEditorReturnKeyPressed" << std::endl;
 }
-
-// void PlaylistComponent::getTrackMetaData()
-// {
-//     for (URL fileURL : trackURLs)
-//     {
-//         juce::File audioFile{fileURL.toString(false)};
-
-//         std::cout << "PlaylistComponent::getTrackMetaData file extension: "
-//                   << audioFile.getFileExtension() << std::endl;
-//         audioFile.getSize();
-//         audioFile.getFileName();
-//     }
-// }
 
 String PlaylistComponent::getCellMetaData(int rowNumber, int columnId)
 {
@@ -196,7 +171,6 @@ String PlaylistComponent::getCellMetaData(int rowNumber, int columnId)
     if (columnId == 4)
     {
         ScopedPointer<AudioFormatReader> reader =
-        // auto* reader =
             formatManager.createReaderFor(
                 trackURLs[rowNumber].createInputStream(false));
         if (reader != nullptr)
@@ -212,4 +186,9 @@ String PlaylistComponent::getCellMetaData(int rowNumber, int columnId)
     }
 
     return text;
+}
+
+void PlaylistComponent::updateLibraryList(std::vector<URL> _trackURLs)
+{
+    trackURLs = _trackURLs;
 }

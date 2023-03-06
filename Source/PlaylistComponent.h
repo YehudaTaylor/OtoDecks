@@ -56,6 +56,8 @@ class PlaylistComponent : public juce::Component,
     // void getTrackMetaData();
 
     String getCellMetaData(int rowNumber, int columnId);
+    /** update the list of songs in the library*/
+    void updateLibraryList(std::vector<URL> _trackURLs);
 
   private:
     AudioFormatManager& formatManager;
