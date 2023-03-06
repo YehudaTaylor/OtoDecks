@@ -56,8 +56,8 @@ void LibraryComponent::buttonClicked(Button* button)
                                  auto chosenFile = chooser.getResult();
                                  addTrackURL(URL{chosenFile});
                                  sendChangeMessage();
+                                 saveLibraryToDisk(getTrackURLs());
                              });
-
         std::cout
             << "LibraryComponent::buttonClicked. Number of tracks loaded: "
             << trackTitles.size() << std::endl;
@@ -83,14 +83,8 @@ void LibraryComponent::filesDropped(const StringArray& files, int x, int y)
                   << std::endl;
         URL fileURL = URL{File{filename}};
         addTrackURL(fileURL);
-
-        std::cout
-            << "LibraryComponent::filesDropped. Number of tracks loaded: "
-            << trackTitles.size() << std::endl;
-        std::cout << "LibraryComponent::filesDropped. Track URL as string: "
-                  << fileURL.toString(true) << std::endl;
-
         sendChangeMessage();
+        saveLibraryToDisk(getTrackURLs());
 
         return;
     }
