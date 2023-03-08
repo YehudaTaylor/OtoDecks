@@ -24,6 +24,8 @@ PlaylistComponent::PlaylistComponent(AudioFormatManager& _formatManager) : forma
     libraryComponent.addChangeListener(this);
     textEditor.addListener(this);
 
+    textEditor.setTextToShowWhenEmpty("Search for a track here", juce::Colours::red);
+
     updateLibraryList(libraryComponent.getTrackURLs());
 
     tableComponent.getHeader().addColumn("Track title", 1, 300);
@@ -51,10 +53,10 @@ void PlaylistComponent::resized()
 {
     // This method is where you should set the bounds of any child
     // components that your component contains..
-    float rowH = getHeight() / 3;
-    tableComponent.setBounds(0, 0, getWidth(), rowH);
-    libraryComponent.setBounds(0, rowH, getWidth(), rowH);
-    textEditor.setBounds(0, rowH * 2, getWidth(), rowH);
+    float rowH = getHeight() / 6;
+    tableComponent.setBounds(0, 0, getWidth(), rowH * 4);
+    textEditor.setBounds(0, rowH * 4, getWidth(), rowH);
+    libraryComponent.setBounds(0, rowH * 5, getWidth(), rowH);
 }
 
 int PlaylistComponent::getNumRows()
