@@ -52,6 +52,9 @@ class DeckGUI : public Component,
     Slider volumeSlider;
     Slider positionSlider;
     Slider speedSlider;
+    Label volumeLabel;
+    Label positionLabel;
+    Label speedLabel;
 
     FileChooser fChooser{"Select a file..."};
 

@@ -35,6 +35,21 @@ DeckGUI::DeckGUI(DJAudioPlayer* _djAudioPlayer,
     positionSlider.setRange(0.0, 1.0);
     speedSlider.setRange(0.0, 100.0);
 
+    volumeSlider.setTextValueSuffix("%");
+    addAndMakeVisible(volumeLabel);
+    volumeLabel.setText("Volume", juce::dontSendNotification);
+    volumeLabel.attachToComponent(&volumeSlider, true);
+
+    positionSlider.setTextValueSuffix("%");
+    addAndMakeVisible(positionLabel);
+    positionLabel.setText("Postion", juce::dontSendNotification);
+    positionLabel.attachToComponent(&positionSlider, true);
+
+    speedSlider.setTextValueSuffix("%");
+    addAndMakeVisible(speedLabel);
+    speedLabel.setText("Speed", juce::dontSendNotification);
+    speedLabel.attachToComponent(&speedSlider, true);
+
     playButton.addListener(this);
     stopButton.addListener(this);
     volumeSlider.addListener(this);
@@ -62,12 +77,14 @@ void DeckGUI::paint(juce::Graphics& g)
 
 void DeckGUI::resized()
 {
+    auto padding = 1;
+    auto sliderLeft = 60;
     float rowH = getHeight() / 10;
     playButton.setBounds(0, 0, getWidth(), rowH);
     stopButton.setBounds(0, rowH, getWidth(), rowH);
-    volumeSlider.setBounds(0, rowH * 2, getWidth(), rowH);
-    positionSlider.setBounds(0, rowH * 3, getWidth(), rowH);
-    speedSlider.setBounds(0, rowH * 4, getWidth(), rowH);
+    volumeSlider.setBounds(sliderLeft + padding, rowH * 2, getWidth() - sliderLeft - padding, rowH);
+    positionSlider.setBounds(sliderLeft + padding, rowH * 3, getWidth() - sliderLeft - padding, rowH);
+    speedSlider.setBounds(sliderLeft + padding, rowH * 4, getWidth() - sliderLeft - padding, rowH);
     waveformDisplay.setBounds(0, rowH * 5, getWidth(), rowH * 2);
     loadButton.setBounds(0, rowH * 7, getWidth(), rowH);
     playbackControls.setBounds(0, rowH * 9, getWidth(), rowH);
