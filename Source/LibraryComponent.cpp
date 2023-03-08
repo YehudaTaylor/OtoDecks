@@ -19,9 +19,7 @@
 LibraryComponent::LibraryComponent()
 {
     addAndMakeVisible(loadButton);
-    addAndMakeVisible(saveButton);
     loadButton.addListener(this);
-    saveButton.addListener(this);
 
     loadLibraryFromDisk();
 }
@@ -41,9 +39,8 @@ void LibraryComponent::paint(juce::Graphics& g)
 
 void LibraryComponent::resized()
 {
-    float rowH = getHeight() / 2;
+    float rowH = getHeight();
     loadButton.setBounds(0, 0, getWidth(), rowH);
-    saveButton.setBounds(0, rowH, getWidth(), rowH);
 }
 
 void LibraryComponent::buttonClicked(Button* button)
@@ -61,12 +58,6 @@ void LibraryComponent::buttonClicked(Button* button)
         std::cout
             << "LibraryComponent::buttonClicked. Number of tracks loaded: "
             << trackTitles.size() << std::endl;
-    }
-    if (button == &saveButton)
-    {
-        saveLibraryToDisk(trackTitles);
-        std::cout << "LibraryComponent::buttonClicked saved library to disk"
-                  << std::endl;
     }
 }
 

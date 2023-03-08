@@ -49,8 +49,7 @@ class LibraryComponent : public juce::Component,
 
   private:
     std::vector<URL> trackTitles;
-    TextButton loadButton{"LOAD"};
-    TextButton saveButton{"Save library to disk"};
+    TextButton loadButton{"CLICK TO LOAD | OR DRAG AND DROP HERE"};
     FileChooser fChooser{"Select a file..."};
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(LibraryComponent)
