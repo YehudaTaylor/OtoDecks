@@ -39,10 +39,20 @@ PlaybackControls::~PlaybackControls()
 
 void PlaybackControls::paint(juce::Graphics& g)
 {
-    g.fillAll(juce::Colours::green); // clear the background
+    //use the value from the slider to change the background color as the value
+    //of the skip amount changes
+    g.fillAll(Colour::fromHSV(0.83, skipSlider.getValue() / 10.0, 1.0, 1.0));
 
-    g.setColour(juce::Colours::blue);
-    g.drawRect(getLocalBounds(), 2); // draw an outline around the component
+    g.setColour(Colour::fromHSV(0.83, skipSlider.getValue() / 10.0, 1.0, 1.0));
+    g.drawRect(getLocalBounds(), 1); // draw an outline around the component
+
+    skipForwardButton.setColour(juce::TextButton::buttonColourId, juce::Colours::lightgreen);
+    skipForwardButton.setColour(juce::TextButton::textColourOffId, juce::Colours::darkblue);
+
+    skipBackwardButton.setColour(juce::TextButton::buttonColourId, juce::Colours::lightgreen);
+    skipBackwardButton.setColour(juce::TextButton::textColourOffId, juce::Colours::darkblue);
+
+    skipSlider.setColour(juce::Slider::textBoxTextColourId, juce::Colours::darkblue);
 }
 
 void PlaybackControls::resized()
