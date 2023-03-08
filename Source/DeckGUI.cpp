@@ -33,7 +33,7 @@ DeckGUI::DeckGUI(DJAudioPlayer* _djAudioPlayer,
 
     volumeSlider.setRange(0.0, 1.0);
     positionSlider.setRange(0.0, 1.0);
-    speedSlider.setRange(0.0, 100.0);
+    speedSlider.setRange(0.1, 10.0);
 
     volumeSlider.setTextValueSuffix("%");
     addAndMakeVisible(volumeLabel);

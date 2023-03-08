@@ -69,10 +69,10 @@ void DJAudioPlayer::stop()
 
 void DJAudioPlayer::setSpeed(double ratio)
 {
-    if (ratio < 0 || ratio > 100.0)
+    if (ratio < 0 || ratio > 10.0)
     {
         std::cout
-            << "DJAudioPlayer::setSpeed ratio should be between 0 and 100"
+            << "DJAudioPlayer::setSpeed ratio should be between 0 and 10"
             << std::endl;
     }
     else
