@@ -80,14 +80,14 @@ void DeckGUI::resized()
     auto padding = 1;
     auto sliderLeft = 60;
     float rowH = getHeight() / 10;
-    playButton.setBounds(0, 0, getWidth(), rowH);
-    stopButton.setBounds(0, rowH, getWidth(), rowH);
-    volumeSlider.setBounds(sliderLeft + padding, rowH * 2, getWidth() - sliderLeft - padding, rowH);
-    positionSlider.setBounds(sliderLeft + padding, rowH * 3, getWidth() - sliderLeft - padding, rowH);
-    speedSlider.setBounds(sliderLeft + padding, rowH * 4, getWidth() - sliderLeft - padding, rowH);
-    waveformDisplay.setBounds(0, rowH * 5, getWidth(), rowH * 2);
-    loadButton.setBounds(0, rowH * 7, getWidth(), rowH);
-    playbackControls.setBounds(0, rowH * 9, getWidth(), rowH);
+    playButton.setBounds(0, 0, getWidth(), rowH * 2);
+    stopButton.setBounds(0, rowH * 2, getWidth(), rowH);
+    volumeSlider.setBounds(sliderLeft + padding, rowH * 3, getWidth() - sliderLeft - padding, rowH);
+    positionSlider.setBounds(sliderLeft + padding, rowH * 4, getWidth() - sliderLeft - padding, rowH);
+    speedSlider.setBounds(sliderLeft + padding, rowH * 5, getWidth() - sliderLeft - padding, rowH);
+    waveformDisplay.setBounds(0, rowH * 6, getWidth(), rowH * 2);
+    playbackControls.setBounds(0, rowH * 8, getWidth(), rowH);
+    loadButton.setBounds(0, rowH * 9, getWidth(), rowH);
 }
 
 void DeckGUI::buttonClicked(Button* button)
