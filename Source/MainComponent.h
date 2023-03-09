@@ -58,9 +58,5 @@ class MainComponent : public AudioAppComponent
 
     MixerAudioSource mixerSource;
 
-    /** todo check if these are being used. remove if not*/
-    bool playing;
-    double gain;
-
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainComponent)
 };

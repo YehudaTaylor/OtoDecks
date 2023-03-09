@@ -76,9 +76,6 @@ class PlaylistComponent : public juce::Component,
      * the users search input.*/
     void textEditorTextChanged(TextEditor&) override;
 
-    /** todo check if this is used at all. remove if it isn't*/
-    void textEditorReturnKeyPressed(TextEditor&) override;
-
     /** returns the track meta-data for each cell as a String. this is called
      * by the paintCell function. it returns the respective data for each cell
      * based on it's rowNumber and columnId.

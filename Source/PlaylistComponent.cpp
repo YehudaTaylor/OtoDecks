@@ -151,10 +151,6 @@ void PlaylistComponent::textEditorTextChanged(TextEditor&)
     updateLibraryList(matchingURLs);
     tableComponent.updateContent();
 }
-void PlaylistComponent::textEditorReturnKeyPressed(TextEditor&)
-{
-    std::cout << "PlaylistComponent::textEditorReturnKeyPressed" << std::endl;
-}
 
 String PlaylistComponent::getCellMetaData(int rowNumber, int columnId)
 {

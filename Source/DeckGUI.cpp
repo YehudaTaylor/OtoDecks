@@ -60,8 +60,6 @@ DeckGUI::DeckGUI(DJAudioPlayer* _djAudioPlayer,
     playlistComponent->addActionListener(this);
 
     startTimer(200);
-
-    // playbackControls.addChangeListener(this);
 }
 
 DeckGUI::~DeckGUI()
@@ -134,6 +132,7 @@ bool DeckGUI::isInterestedInFileDrag(const StringArray& files)
     std::cout << "DeckGUI::isInterestedInFileDrag" << std::endl;
     return true;
 }
+
 void DeckGUI::filesDropped(const StringArray& files, int x, int y)
 {
     for (String filename : files)
@@ -148,15 +147,7 @@ void DeckGUI::filesDropped(const StringArray& files, int x, int y)
 
 void DeckGUI::timerCallback()
 {
-    // DBG("DeckGUI::timerCallback");
     waveformDisplay.setPositionRelative(djAudioPlayer->getPositionRelative());
-}
-
-void DeckGUI::changeListenerCallback(ChangeBroadcaster* source)
-{
-    std::cout << "DeckGUI::changeListenerCallback: " << source << std::endl;
-    std::cout << "DeckGUI::changeListenerCallback: change received! "
-              << std::endl;
 }
 
 void DeckGUI::actionListenerCallback(const String& message)

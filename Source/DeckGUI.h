@@ -25,7 +25,6 @@ class DeckGUI : public Component,
                 public Slider::Listener,
                 public FileDragAndDropTarget,
                 public Timer,
-                public ChangeListener,
                 public ActionListener
 {
   public:
@@ -62,9 +61,6 @@ class DeckGUI : public Component,
     /** callback routine that actually gets called periodically. this is used
      * to update the position rectangle in the waveform display*/
     void timerCallback() override;
-
-    /** TODO check if this is used*/
-    void changeListenerCallback(ChangeBroadcaster* source) override;
 
     /** callback listener that recieve messages broadcasted from the playlist
      * component. the playlist component sends out an action message when a
