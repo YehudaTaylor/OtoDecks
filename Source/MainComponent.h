@@ -21,26 +21,31 @@
 class MainComponent : public AudioAppComponent
 {
   public:
-    //==============================================================================
     MainComponent();
     ~MainComponent();
 
-    //==============================================================================
+    /** called before playback starts, to let the processor prepare itself*/
     void prepareToPlay(int samplesPerBlockExpected,
                        double sampleRate) override;
+
+    /** called repeatedly to fetch subsequent blocks of audio data*/
     void getNextAudioBlock(
         const AudioSourceChannelInfo& bufferToFill) override;
+
+    /** called after playback has stopped, to let the object free up any
+     * resources it no longer needs*/
     void releaseResources() override;
 
-    //==============================================================================
+    /** component overrides this, for drawing it's content*/
     void paint(Graphics& g) override;
+
+    /** component overrides this, to place child components in the correct
+     * place when the width or height changes*/
     void resized() override;
 
   private:
-    //==============================================================================
-    // Your private member variables go here...
     AudioFormatManager formatManager;
-    // note we need to tell it how large the cache is. 20 files are ok for now.
+
     AudioThumbnailCache thumbnailCache{20};
 
     PlaylistComponent playlistComponent{formatManager};
@@ -53,6 +58,7 @@ class MainComponent : public AudioAppComponent
 
     MixerAudioSource mixerSource;
 
+    /** todo check if these are being used. remove if not*/
     bool playing;
     double gain;
 

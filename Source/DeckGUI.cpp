@@ -163,7 +163,6 @@ void DeckGUI::actionListenerCallback(const String& message)
 {
     std::cout << "DeckGUI::actionListenerCallback, message: " << message
               << std::endl;
-    // URL fileURL = URL{File{message}};
     URL fileURL = URL{message};
     djAudioPlayer->loadURL(fileURL);
     waveformDisplay.loadURL(fileURL);

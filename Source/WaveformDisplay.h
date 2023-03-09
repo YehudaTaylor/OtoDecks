@@ -22,10 +22,17 @@ class WaveformDisplay : public juce::Component, public ChangeListener
                     AudioThumbnailCache& cacheToUse);
     ~WaveformDisplay() override;
 
+    /** component overrides this, for drawing it's content*/
     void paint(juce::Graphics&) override;
+
+    /** component overrides this, to place child components in the correct
+     * place when the width or height changes*/
     void resized() override;
 
+    /** generate the waveform for the file with the given URL*/
     void loadURL(URL audioURL);
+
+    /** callback that updates the waveform display by repainting it*/
     void changeListenerCallback(ChangeBroadcaster* source) override;
 
     /** set the relative position of the play head*/
@@ -33,7 +40,9 @@ class WaveformDisplay : public juce::Component, public ChangeListener
 
   private:
     AudioThumbnail audioThumbnail;
+
     bool fileLoaded;
+
     double position;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(WaveformDisplay)
