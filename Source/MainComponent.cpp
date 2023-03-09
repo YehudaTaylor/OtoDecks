@@ -36,14 +36,6 @@ MainComponent::MainComponent()
     addAndMakeVisible(deck2);
     addAndMakeVisible(playlistComponent);
 
-    // list of supported audio formats
-    // for (int i = 0; i < formatManager.getNumKnownFormats(); i++)
-    // {
-    //     std::string s =
-    //         formatManager.getKnownFormat(i)->getFormatName().toStdString();
-    //     std::cout << i << " " << s << std::endl;
-    // }
-
     formatManager.registerBasicFormats();
 }
 
@@ -59,12 +51,7 @@ void MainComponent::prepareToPlay(int samplesPerBlockExpected,
 {
     mixerSource.addInputSource(&player1, false);
     mixerSource.addInputSource(&player2, false);
-    // note that this will call prepareToPlay
-    // automatically on the two players
     mixerSource.prepareToPlay(samplesPerBlockExpected, sampleRate);
-    // so this is not needed:
-    // player1.prepareToPlay(samplesPerBlockExpected, sampleRate);
-    // player2.prepareToPlay(samplesPerBlockExpected, sampleRate);
 }
 
 void MainComponent::getNextAudioBlock(
@@ -89,15 +76,7 @@ void MainComponent::releaseResources()
 //==============================================================================
 void MainComponent::paint(Graphics& g)
 {
-    // std::cout << "MainComponent::paint was called " << std::endl;
-
-    // (Our component is opaque, so we must completely fill the background with
-    // a solid colour) g.fillAll (getLookAndFeel().findColour
-    // (ResizableWindow::backgroundColourId));
-
     g.fillAll(Colour{255, 0, 0});
-
-    // You can add your drawing code here!
 }
 
 void MainComponent::resized()

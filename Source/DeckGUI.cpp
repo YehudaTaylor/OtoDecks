@@ -29,25 +29,24 @@ DeckGUI::DeckGUI(DJAudioPlayer* _djAudioPlayer,
     addAndMakeVisible(speedSlider);
     addAndMakeVisible(waveformDisplay);
     addAndMakeVisible(playbackControls);
-
+    addAndMakeVisible(volumeLabel);
+    addAndMakeVisible(positionLabel);
+    addAndMakeVisible(speedLabel);
 
     volumeSlider.setRange(0.0, 1.0);
     positionSlider.setRange(0.0, 1.0);
     speedSlider.setRange(0.1, 10.0);
 
     volumeSlider.setTextValueSuffix("%");
-    addAndMakeVisible(volumeLabel);
-    volumeLabel.setText("Volume", juce::dontSendNotification);
-    volumeLabel.attachToComponent(&volumeSlider, true);
-
     positionSlider.setTextValueSuffix("%");
-    addAndMakeVisible(positionLabel);
-    positionLabel.setText("Postion", juce::dontSendNotification);
-    positionLabel.attachToComponent(&positionSlider, true);
-
     speedSlider.setTextValueSuffix("%");
-    addAndMakeVisible(speedLabel);
+
+    volumeLabel.setText("Volume", juce::dontSendNotification);
+    positionLabel.setText("Postion", juce::dontSendNotification);
     speedLabel.setText("Speed", juce::dontSendNotification);
+
+    volumeLabel.attachToComponent(&volumeSlider, true);
+    positionLabel.attachToComponent(&positionSlider, true);
     speedLabel.attachToComponent(&speedSlider, true);
 
     playButton.addListener(this);
@@ -80,9 +79,12 @@ void DeckGUI::resized()
     float rowH = getHeight() / 10;
     playButton.setBounds(0, 0, getWidth(), rowH * 2);
     stopButton.setBounds(0, rowH * 2, getWidth(), rowH);
-    volumeSlider.setBounds(sliderLeft + padding, rowH * 3, getWidth() - sliderLeft - padding, rowH);
-    positionSlider.setBounds(sliderLeft + padding, rowH * 4, getWidth() - sliderLeft - padding, rowH);
-    speedSlider.setBounds(sliderLeft + padding, rowH * 5, getWidth() - sliderLeft - padding, rowH);
+    volumeSlider.setBounds(sliderLeft + padding, rowH * 3,
+                           getWidth() - sliderLeft - padding, rowH);
+    positionSlider.setBounds(sliderLeft + padding, rowH * 4,
+                             getWidth() - sliderLeft - padding, rowH);
+    speedSlider.setBounds(sliderLeft + padding, rowH * 5,
+                          getWidth() - sliderLeft - padding, rowH);
     waveformDisplay.setBounds(0, rowH * 6, getWidth(), rowH * 2);
     playbackControls.setBounds(0, rowH * 8, getWidth(), rowH);
     loadButton.setBounds(0, rowH * 9, getWidth(), rowH);
@@ -106,7 +108,6 @@ void DeckGUI::buttonClicked(Button* button)
             fileChooserFlags, [this](const FileChooser& chooser) {
                 auto chosenFile = chooser.getResult();
                 djAudioPlayer->loadURL(URL{chosenFile});
-                // and now the waveformDisplay as well
                 waveformDisplay.loadURL(URL{chooser.getResult()});
             });
     }

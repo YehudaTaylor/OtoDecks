@@ -13,7 +13,8 @@
 
 
 //==============================================================================
-PlaylistComponent::PlaylistComponent(AudioFormatManager& _formatManager) : formatManager(_formatManager)
+PlaylistComponent::PlaylistComponent(AudioFormatManager& _formatManager)
+    : formatManager(_formatManager)
 {
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
@@ -24,7 +25,8 @@ PlaylistComponent::PlaylistComponent(AudioFormatManager& _formatManager) : forma
     libraryComponent.addChangeListener(this);
     textEditor.addListener(this);
 
-    textEditor.setTextToShowWhenEmpty("Search for a track here", juce::Colours::red);
+    textEditor.setTextToShowWhenEmpty("Search for a track here",
+                                      juce::Colours::red);
 
     updateLibraryList(libraryComponent.getTrackURLs());
 
@@ -43,10 +45,10 @@ PlaylistComponent::~PlaylistComponent()
 void PlaylistComponent::paint(juce::Graphics& g)
 {
     g.fillAll(getLookAndFeel().findColour(
-        juce::ResizableWindow::backgroundColourId)); // clear the background
+        juce::ResizableWindow::backgroundColourId));
 
     g.setColour(juce::Colours::grey);
-    g.drawRect(getLocalBounds(), 1); // draw an outline around the component
+    g.drawRect(getLocalBounds(), 1);
 }
 
 void PlaylistComponent::resized()
@@ -63,6 +65,7 @@ int PlaylistComponent::getNumRows()
 {
     return trackURLs.size();
 }
+
 void PlaylistComponent::paintRowBackground(Graphics& g, int rowNumber,
                                            int width, int height,
                                            bool rowIsSelected)
@@ -157,7 +160,7 @@ String PlaylistComponent::getCellMetaData(int rowNumber, int columnId)
     juce::File audioFile{trackURLs[rowNumber].toString(false)};
 
     String text = "Default text";
-    
+
     if (columnId == 1)
     {
         text = audioFile.getFileNameWithoutExtension();
@@ -173,13 +176,12 @@ String PlaylistComponent::getCellMetaData(int rowNumber, int columnId)
                 trackURLs[rowNumber].createInputStream(false));
         if (reader != nullptr)
         {
-            double seconds = reader->lengthInSamples/ reader->sampleRate;
+            double seconds = reader->lengthInSamples / reader->sampleRate;
             RelativeTime relativeTime{seconds};
             String trackLength = relativeTime.getDescription();
             text = trackLength;
-            std::cout
-                << "PlaylistComponent::getCellMetaData track length: "
-                << trackLength << std::endl;
+            std::cout << "PlaylistComponent::getCellMetaData track length: "
+                      << trackLength << std::endl;
         }
     }
 

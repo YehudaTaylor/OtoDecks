@@ -31,10 +31,10 @@ LibraryComponent::~LibraryComponent()
 void LibraryComponent::paint(juce::Graphics& g)
 {
     g.fillAll(getLookAndFeel().findColour(
-        juce::ResizableWindow::backgroundColourId)); // clear the background
+        juce::ResizableWindow::backgroundColourId));
 
     g.setColour(juce::Colours::grey);
-    g.drawRect(getLocalBounds(), 1); // draw an outline around the component
+    g.drawRect(getLocalBounds(), 1);
 }
 
 void LibraryComponent::resized()

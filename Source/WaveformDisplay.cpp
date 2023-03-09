@@ -30,10 +30,10 @@ WaveformDisplay::~WaveformDisplay()
 void WaveformDisplay::paint(juce::Graphics& g)
 {
     g.fillAll(getLookAndFeel().findColour(
-        juce::ResizableWindow::backgroundColourId)); // clear the background
+        juce::ResizableWindow::backgroundColourId));
 
     g.setColour(juce::Colours::black);
-    g.drawRect(getLocalBounds(), 1); // draw an outline around the component
+    g.drawRect(getLocalBounds(), 1);
 
     g.setColour(juce::Colours::green);
     if (fileLoaded)
@@ -48,14 +48,12 @@ void WaveformDisplay::paint(juce::Graphics& g)
         g.setFont(24.0f);
         g.drawText("File not loaded...", getLocalBounds(),
                    juce::Justification::centred,
-                   true); // draw some placeholder text
+                   true);
     }
 }
 
 void WaveformDisplay::resized()
 {
-    // This method is where you should set the bounds of any child
-    // components that your component contains..
 }
 
 void WaveformDisplay::loadURL(URL audioURL)

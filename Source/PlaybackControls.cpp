@@ -44,7 +44,7 @@ void PlaybackControls::paint(juce::Graphics& g)
     g.fillAll(Colour::fromHSV(0.83, skipSlider.getValue() / 10.0, 1.0, 1.0));
 
     g.setColour(Colour::fromHSV(0.83, skipSlider.getValue() / 10.0, 1.0, 1.0));
-    g.drawRect(getLocalBounds(), 1); // draw an outline around the component
+    g.drawRect(getLocalBounds(), 1);
 
     skipForwardButton.setColour(juce::TextButton::buttonColourId, juce::Colours::lightgreen);
     skipForwardButton.setColour(juce::TextButton::textColourOffId, juce::Colours::darkblue);
@@ -76,6 +76,7 @@ void PlaybackControls::buttonClicked(Button* button)
         djAudioPlayer->skipBackward(skipSlider.getValue());
     }
 }
+
 void PlaybackControls::sliderValueChanged(Slider* slider)
 {
     if (slider == &skipSlider)

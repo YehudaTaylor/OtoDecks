@@ -13,8 +13,8 @@
 DJAudioPlayer::DJAudioPlayer(AudioFormatManager& _formatManager)
     : formatManager(_formatManager)
 {
-    // formatManager.registerBasicFormats();
 }
+
 DJAudioPlayer::~DJAudioPlayer()
 {
 }
@@ -25,17 +25,13 @@ void DJAudioPlayer::prepareToPlay(int samplesPerBlockExpected,
     transportSource.prepareToPlay(samplesPerBlockExpected, sampleRate);
     resampleSource.prepareToPlay(samplesPerBlockExpected, sampleRate);
 }
+
 void DJAudioPlayer::getNextAudioBlock(
     const AudioSourceChannelInfo& bufferToFill)
 {
-    // if (readerSource.get() == nullptr)
-    // {
-    //     bufferToFill.clearActiveBufferRegion();
-    //     return;
-    // }
-    // transportSource.getNextAudioBlock(bufferToFill);
     resampleSource.getNextAudioBlock(bufferToFill);
 }
+
 void DJAudioPlayer::releaseResources()
 {
     transportSource.releaseResources();
@@ -57,11 +53,13 @@ void DJAudioPlayer::loadURL(URL audioURL)
         std::cout << "DJAudioPlayer::loadURL: file loaded" << std::endl;
     }
 }
+
 void DJAudioPlayer::play()
 {
     transportSource.setPosition(0);
     transportSource.start();
 }
+
 void DJAudioPlayer::stop()
 {
     transportSource.stop();
@@ -71,15 +69,15 @@ void DJAudioPlayer::setSpeed(double ratio)
 {
     if (ratio < 0 || ratio > 10.0)
     {
-        std::cout
-            << "DJAudioPlayer::setSpeed ratio should be between 0 and 10"
-            << std::endl;
+        std::cout << "DJAudioPlayer::setSpeed ratio should be between 0 and 10"
+                  << std::endl;
     }
     else
     {
         resampleSource.setResamplingRatio(ratio);
     }
 }
+
 void DJAudioPlayer::setPosition(double posInSecs)
 {
     if (posInSecs < 0 || posInSecs > transportSource.getLengthInSeconds())
